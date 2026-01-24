@@ -1,0 +1,41 @@
+---
+title: My First Test(ing) Post
+excerpt: >-
+  Yes, This is just another dummy. `Do not` worry, all is under control, I
+  think!
+cover: ../../../assets/images/posts/my-first-test-ing-post/cover.heif
+pubDate: 2026-01-24T14:10:00.000Z
+isDraft: true
+authors:
+  - lazaro-osee
+---
+{% post-intro %}
+This is just a fancy intro markdoc tag I decided to use in all my posts, so deal with it!
+{% /post-intro %}
+
+```ts
+// home-address.ts
+type Address = {};
+
+class Home() {
+  private address: Address;
+  constructor(address: Address) {
+    this.address = address;
+  }
+}
+```
+
+```sh
+npm install markdoc
+```
+
+> This is  a sample blockquote
+
+```diff
+  function thisIsJavaScript() {
+    // This entire block gets highlighted as JavaScript,
+    // and we can still add diff markers to it!
+-   console.log('Old code to be removed')
++   console.log('New and shiny code!')
+  }
+```

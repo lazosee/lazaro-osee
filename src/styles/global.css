@@ -1,0 +1,83 @@
+@import 'tailwindcss';
+
+@import '@fontsource/quicksand';
+@import '@fontsource/comfortaa';
+@import '@fontsource/architects-daughter';
+@import '@fontsource/atkinson-hyperlegible';
+@import '@fontsource/grandstander';
+
+@plugin '@tailwindcss/typography';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/aspect-ratio';
+@plugin '@tailwindcss/container-queries';
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+	--font-quicksand: 'Quicksand', system-ui;
+	--font-comfortaa: 'Comfortaa', system-ui;
+	--font-arch: 'Architects Daughter', cursive;
+	--font-atkinson: 'Atkinson Hyperlegible', system-ui;
+	--font-grandstander: 'Grandstander', system-ui;
+
+	--color-link: light-dark(var(--color-sky-600), var(--color-sky-500));
+}
+
+@layer base {
+	html {
+		scrollbar-gutter: both-edges;
+		color-scheme: dark;
+	}
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply leading-relaxed tracking-normal;
+	}
+	h1 {
+		font-size: clamp(2rem, 3vw + 1rem, 3rem);
+		/* @apply text-4xl; */
+	}
+	h2 {
+		@apply text-3xl;
+	}
+	h3 {
+		@apply text-2xl;
+	}
+	h4 {
+		@apply text-xl;
+	}
+	h5 {
+		@apply text-lg;
+	}
+	h6 {
+		@apply text-base;
+	}
+	a {
+		@apply underline-offset-4 decoration-1;
+	}
+	hr {
+		@apply flex grow border-t border-current w-full my-6 opacity-80;
+	}
+}
+
+@layer components {
+	.slanted-header {
+		/* Points: top-left, top-right, bottom-right, bottom-left */
+		clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
+		clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+		clip-path: polygon(0 0, 100% 0, 100% 100%, 94% 90%, 50% 100%, 6% 90%, 0 100%);
+		@apply min-h-[20ch];
+	}
+	.highlight {
+		@apply font-comfortaa tracking-normal p-2 bg-sky-500/20 border border-sky-500/40 rounded-md [corner-shape:squircle];
+	}
+}
+
+@layer utils {
+	.corner-squircle {
+		corner-shape: squircle;
+	}
+}

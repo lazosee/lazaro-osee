@@ -1,0 +1,15 @@
+name: Lazaro Osee
+image: ../../../assets/images/authors/lazaro-osee/image.heif
+posts:
+  - my-first-posts-testing-markdoc-with-keystatic
+  - my-first-test-ing-post
+socials:
+  - label: Github
+    href: https://github.com/lazosee
+    icon: github
+  - label: Bluesky
+    href: https://bsky.app/profile/lazaroosee.xyz
+    icon: bluesky
+  - label: X (formerly Twitter)
+    href: https:/x.com/thedevequation
+    icon: twitter

@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import { Icon } from '@/assets/icons/icon';
+import { postsFilter } from '@/utils/collections/filters';
+import { HrIcon } from '@/components';
+
+const posts = (await getCollection('posts', postsFilter['filter-published-on-production'])).slice(0, 5);
+
+---
+
+<Layout title="Home - Osee Blog">
+  <section class="block content-center-safe justify-items-center-safe p-2 px-3">
+    <ul class="list-none block w-full max-w-[60ch] content-center-safe justify-items-start">
+      <h2 class="font-grandstander font-bold text-rose-500">Recent posts</h2>
+      <HrIcon /> 
+
+      {posts.map((p, i) => (
+        <li class="block px-1 py-2 content-center-safe justify-items-center-safe">
+          <article class="block gap-4">
+            <a href={`/posts/${p.slug}`} class="block mb-6 text-sky-700 dark:text-sky-500 no-underline hover:underline">
+              <h4 class="">{p.data.title}</h4>
+            </a>
+            <p class="prose dark:prose-invert">{p.data.excerpt}</p>
+            <a href={`/posts/${p.slug}`} class="block underline text-link py-2 my-2">
+              <span class="flex gap-2">
+                Read more
+                <Icon name="move-right" />
+              </span>
+            </a>
+          </article>
+        </li>
+        <span>{i < posts.length ? <hr class="my-6" /> : ""}</span>
+      ))}
+    </ul>
+  </section>
+</Layout>

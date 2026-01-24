@@ -1,0 +1,19 @@
+---
+import { Code } from 'astro-expressive-code/components';
+import { Wrapper } from '..';
+
+interface Props {
+  content: string;
+  language?: string;
+  title?: string;
+  frame?: "code" | "none" | "terminal" | "auto";
+  meta?: string;
+  showLineNumbers?: boolean
+}
+
+const { content: code, language: lang, title, showLineNumbers, frame = "auto", meta = "" } = Astro.props;
+---
+
+<Wrapper class="my-4">
+  <Code {code} {lang} {title} {frame} {meta} {showLineNumbers} wrap  />
+</Wrapper>

@@ -1,0 +1,16 @@
+---
+import type { SvgComponent } from 'astro/types';
+import type { IconName } from './icon';
+
+export interface Props {
+    name: IconName;
+}
+const { name } = Astro.props;
+
+if (!name) return ""
+
+const Comp = (await import(`./${name}/index.svg`)).default as SvgComponent & ImageMetadata
+
+---
+
+<Comp />

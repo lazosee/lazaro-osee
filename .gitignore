@@ -1,0 +1,12 @@
+
+# Environment Files
+.env
+.env.*
+.env.local
+
+# Node Modules and Builds
+.astro/
+.dist/
+/node_modules/
+/build/
+/dist/

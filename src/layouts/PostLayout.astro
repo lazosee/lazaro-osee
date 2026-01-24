@@ -1,0 +1,28 @@
+---
+import { humanDate } from '@/utils/posts/date';
+import type { HTMLAttributes } from 'astro/types';
+import type { InferEntrySchema } from 'astro:content';
+import { getEntries } from 'astro:content';
+
+interface Props extends HTMLAttributes<"section"> {
+    frontmatter: InferEntrySchema<"posts">
+}
+const {frontmatter, ...rest} = Astro.props;
+
+const authors = await getEntries(frontmatter.authors)
+
+console.log({
+    // frontmatter, authors
+})
+---
+
+<section class="block justify-items-center-safe min-h-screen p-0">
+    <header class="block w-full max-w-[60ch] my-6 px-6 sm:px-1">
+        <time class="font-grandstander" datetime={frontmatter.pubDate.toISOString()}>
+            {humanDate(frontmatter.pubDate, {})}
+        </time>
+    </header>
+    <article class="prose dark:prose-invert p-4 prose-code:border prose-code:border-slate-300 dark:prose-code:border-slate-700 prose-code:px-1 prose-code:corner-squircle prose-code:rounded prose-code:bg-slate-200 dark:prose-code:bg-slate-900 prose-code:before:content-none prose-code:after:content-none">
+        <slot />
+    </article>
+</section>

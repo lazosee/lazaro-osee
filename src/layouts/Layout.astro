@@ -1,0 +1,54 @@
+---
+import { Footer, Navbar, Wrapper } from '@/components';
+import { links, socials } from '@/constants';
+import "@/styles/fonts";
+import '@/styles/global.css';
+import type { InferEntrySchema } from 'astro:content';
+
+export interface Props {
+	title: string;
+	post?: InferEntrySchema<"posts">
+}
+
+const { title, post } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-code-theme="github-dark-default" class="max-w-screen min-h-screen justify-items-center-safe">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description">
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="font-atkinson max-w-screen w-full justify-items-center-safe overflow-x-hidden bg-slate-50 dark:bg-stone-950">
+		<button id="theme-toggle">system</button>
+		<header class="block p-3 pt-10 justify-items-center-safe w-full bg-linear-to-b to-rose-800/60 to-90% from-sky-800/60">
+			<Navbar {links} />
+			{post && (
+				<Wrapper class="block w-full max-w-[80ch] content-center-safe justify-items-center-safe pt-10">
+					<h1 class="block font-grandstander text-center">{post.title}</h1>
+				</Wrapper>
+			)}
+		</header>
+		<!-- <div class="w-full h-12 bg-rose-800"></div> -->
+		<Wrapper class='w-full max-w-[100ch] pt-6'>
+			<slot />
+		</Wrapper>
+		<Footer {links} {socials} />
+	</body>
+</html>
+
+<script>
+	import { ThemeManager } from "@/utils/frontend/theme";
+
+	const themeBtn = document.getElementById("theme-toggle") as HTMLButtonElement;
+
+	const themeManager = new ThemeManager();
+	themeManager.applyTheme("system")
+
+	themeBtn.addEventListener("click", () => themeManager.applyTheme(themeManager.getResolvedTheme() === "dark" ? "light" : "dark"));
+	window.__app__.themeManager = themeManager;
+</script>

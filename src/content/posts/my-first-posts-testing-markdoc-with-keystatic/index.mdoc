@@ -1,0 +1,55 @@
+---
+title: My first Posts testing markdoc with keystatic
+excerpt: >-
+  This sample post is a dummy I made for testing out  astro + markdoc +
+  keystatic cms
+cover: >-
+  ../../../assets/images/posts/my-first-posts-testing-markdoc-with-keystatic/cover.png
+pubDate: 2026-01-24T14:03:00.000Z
+isDraft: true
+authors:
+  - lazaro-osee
+---
+{% post-intro %}
+Well, well, well. Here we go testing markdoc™ + keystatic CMS on Astro framework with Tailwind CSS styling.
+{% /post-intro %}
+
+`Hello World` here is some code
+
+{% fence
+   title="test.ts"
+   language="ts"
+   showLineNumbers=true
+   meta="ins={2} del={1}"
+   frame="terminal"
+   content="export const cms = \"another\";\nexport const cms = \"keystatic\";" /%}
+
+{% fence
+   language="ts"
+   showLineNumbers=true
+   frame="terminal"
+   content="// main.ts\n\nexport const cms = \"keystatic\";" /%}
+
+You can edit this page in the [Admin UI](/keystatic/collection/posts/item/first-post), or directly in your `IDE` at `src/content/posts/first-post.mdoc.`
+
+```ts
+-export const cms = "another";
++export const cms = "keystatic";
+```
+
+```ts
+console.log("Yellow World"); 
+
+```
+
+> *How you doin'?*
+> 
+> Joe Tribianni
+
+![](../../../assets/images/posts/my-first-posts-testing-markdoc-with-keystatic/_image.heif)
+
+{% fence
+   language="py"
+   showLineNumbers=true
+   frame="auto"
+   content="print(\"Hello World!\")\n" /%}

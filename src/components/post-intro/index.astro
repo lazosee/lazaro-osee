@@ -1,0 +1,13 @@
+---
+import { HrIcon } from '..';
+
+interface Props {
+    'class': string;
+}
+const { 'class': cn } = Astro.props;
+---
+
+<div class:list={["text-2xl font-grandstander", cn]}>
+    <slot />
+</div>
+<HrIcon />

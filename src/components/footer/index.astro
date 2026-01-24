@@ -1,0 +1,30 @@
+---
+import type { Link, Social } from "@/constants";
+import type { HTMLAttributes } from "astro/types";
+import { Wrapper } from "..";
+
+interface Props extends HTMLAttributes<"nav"> {
+    links: Link[];
+    socials: Social[]
+}
+
+const { links, socials } = Astro.props;
+---
+
+<Wrapper class="block w-full p-2 pb-6 pt-3 sm:p-4 sm:pt-6 sm:pb-8 content-center-safe justify-items-center-safe bg-rose-200 dark:bg-rose-800">
+    <footer class="block sm:flex w-full max-w-[80ch] items-center justify-between leading-loose">
+        <div class="flex items-center-safe justify-center-safe">
+            <p class="block content-center-safe justify-items-center-safe text-center font-arch font-semibold tracking-wider my-6 leading-10">
+                Built with <a href="https://astro.build" target="_blank" class="highlight">Astro</a>, <a href="https://keystatic.com" target="_blank" class="highlight">keystatic</a>, and <a href="https://tailwindcss.com" target="_blank" class="highlight">Tailwind CSS</a>
+            </p>
+        </div>
+        <div class="flex gap-3 m-3 items-center-safe justify-center-safe">
+            {socials.map((s) => (
+                <a href="" class="p-2 m-1" data-tooltip={s.label}>
+                    <s.icon data-label={s.label} />
+                </a>
+            ))}
+        </div>
+    </footer>
+</Wrapper>
+

@@ -1,0 +1,29 @@
+---
+import { Wrapper } from "..";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"nav"> {
+    links: {
+        href: string;
+        label: string;
+    }[]
+}
+
+const { links} = Astro.props;
+---
+
+<Wrapper class="block sm:flex gap-3 content-center-safe justify-items-center-safe">
+    <a class="logo block font-arch font-extrabold text-white text-4xl mb-4" href="/">lazaro osee</a>
+    <nav class="block w-full max-w-[80ch] content-center-safe justify-items-center-safe">
+        <ul class="list-none flex sm:flex gap-3">
+            {links.map((link) => (
+                <li class="list-none">
+                    <a class="bg-gray-50 px-3 py-1 shadow-[inset_0_-3em_3em_rgb(0_100_0/30%),0_0_0_2px_white] hover:shadow-[0_0_0_2px_white] focus:shadow-[0_0_0_2px_white] " href={link.href}>{link.label}</a>
+                </li>
+            ))}
+        </ul>
+    </nav>
+</Wrapper>
+
+<script>
+</script>

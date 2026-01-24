@@ -1,0 +1,12 @@
+[
+	{
+		"id": "lazaro-osee",
+		"path": "src/content",
+		"schema": {
+			"path": "markdoc.config.mjs",
+			"property": "default",
+			"type": "esm",
+			"watch": true
+		}
+	}
+]
