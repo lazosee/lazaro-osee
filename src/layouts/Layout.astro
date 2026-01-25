@@ -1,4 +1,5 @@
 ---
+import { Icon } from '@/assets/icons/icon';
 import { Footer, Navbar, Wrapper } from '@/components';
 import { links, socials } from '@/constants';
 import "@/styles/fonts";
@@ -23,8 +24,7 @@ const { title, post } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class="font-atkinson max-w-screen w-full justify-items-center-safe overflow-x-hidden bg-slate-50 dark:bg-stone-950">
-		<button id="theme-toggle">system</button>
+	<body class="font-atkinson w-full max-w-screen justify-items-center-safe overflow-x-hidden bg-slate-50 dark:bg-stone-950">
 		<header class="block p-3 pt-10 justify-items-center-safe w-full bg-linear-to-b to-rose-800/60 to-90% from-sky-800/60">
 			<Navbar {links} />
 			{post && (
@@ -33,7 +33,7 @@ const { title, post } = Astro.props;
 				</Wrapper>
 			)}
 		</header>
-		<!-- <div class="w-full h-12 bg-rose-800"></div> -->
+		<slot name="hero" />
 		<Wrapper class='w-full max-w-[100ch] pt-6'>
 			<slot />
 		</Wrapper>
@@ -42,13 +42,19 @@ const { title, post } = Astro.props;
 </html>
 
 <script>
-	import { ThemeManager } from "@/utils/frontend/theme";
+	import { themeManager } from "@/utils/frontend/theme";
+
+	const moon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon-icon lucide-moon"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>`;
+
+	const sun = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun-icon lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`
 
 	const themeBtn = document.getElementById("theme-toggle") as HTMLButtonElement;
-
-	const themeManager = new ThemeManager();
 	themeManager.applyTheme("system")
 
-	themeBtn.addEventListener("click", () => themeManager.applyTheme(themeManager.getResolvedTheme() === "dark" ? "light" : "dark"));
+	themeBtn.addEventListener("click", () => {
+		const rt = themeManager.getResolvedTheme()
+		themeManager.applyTheme(rt === "dark" ? "light" : "dark");
+		rt === "light" ? themeBtn.innerHTML = sun : themeBtn.innerHTML = moon;
+	});
 	window.__app__.themeManager = themeManager;
 </script>

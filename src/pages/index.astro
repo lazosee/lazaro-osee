@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import { Icon } from '@/assets/icons/icon';
@@ -10,10 +12,40 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
 ---
 
 <Layout title="Home - Osee Blog">
+  <section slot="hero" class="block w-full relative overflow-hidden min-h-[70dvh] content-center-safe justify-items-center-safe items-center justify-center text-center p-6 pb-20 font-grandstander">
+    <div class="relative z-10 max-w-3xl">
+      <h1 class="block font-grandstander text-4xl md:text-7xl font-bold text-rose-900 dark:text-white mb-4 tracking-tight">
+        Hi, I am <span class="text-rose-500">Lazaro</span>
+      </h1>
+      
+      <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+        Architecture student by day, software developer by night. 
+        I design <span class="italic font-medium text-slate-800 dark:text-slate-200">physical spaces</span> 
+        and build <span class="italic font-medium text-slate-800 dark:text-slate-200">digital ones</span>.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4 mb-6">
+        <a href="/blog" class="block content-center-safe justify-items-center-safe px-8 py-3 bg-rose-950 dark:bg-white text-white dark:text-rose-900 font-semibold rounded-full corner-squircle hover:scale-105 transition-transform">
+          Read the Blog
+        </a>
+        <!-- {/* -->
+        <a href="/#work" class="px-8 py-3 border-2 border-rose-400 dark:border-rose-800 font-semibold rounded-full corner-squircle hover:bg-rose-50 dark:hover:bg-rose-900 transition-colors">
+          View My Work
+        </a>
+        <!-- */} -->
+      </div>
+    </div>
+
+    <div class="absolute bottom-10 animate-bounce">
+      <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
+  </section>
   <section class="block content-center-safe justify-items-center-safe p-2 px-3">
     <ul class="list-none block w-full max-w-[60ch] content-center-safe justify-items-start">
       <h2 class="font-grandstander font-bold text-rose-500">Recent posts</h2>
-      <HrIcon /> 
+      <HrIcon icon="book" /> 
 
       {posts.map((p, i) => (
         <li class="block px-1 py-2 content-center-safe justify-items-center-safe">

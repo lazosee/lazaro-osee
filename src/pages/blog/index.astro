@@ -1,0 +1,9 @@
+---
+export const prerender = false;
+Astro.redirect("/posts", 301)
+---
+
+<head>
+  <meta http-equiv="refresh" content="0;url=/posts" />
+</head>
+<p>Page Moved to <a href="/posts">Posts</a></p>
