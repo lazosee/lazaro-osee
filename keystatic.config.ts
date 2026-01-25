@@ -4,7 +4,11 @@ import { block, wrapper } from '@keystatic/core/content-components'
 
 export default config({
 	storage: {
-		kind: 'local',
+		kind: 'github',
+		repo: {
+			name: 'lazaro-osee',
+			owner: 'lazosee',
+		},
 	},
 	ui: {
 		brand: {
