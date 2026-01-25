@@ -15,7 +15,7 @@ config({ quiet: true })
 
 const isProd = process.env.NODE_ENV === 'production'
 
-console.log(adapter.name)
+console.log(isProd)
 
 // https://astro.build/config
 export default defineConfig({
