@@ -47,7 +47,5 @@ export default defineConfig({
 	},
 
 	output: 'server',
-	adapter: isProd
-		? vercel({ edgeMiddleware: true, isr: true, webAnalytics: { enabled: true } })
-		: node({ mode: 'standalone' }),
+	adapter: isProd ? vercel({ webAnalytics: { enabled: true } }) : node({ mode: 'standalone' }),
 })

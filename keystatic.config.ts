@@ -5,10 +5,10 @@ import { block, wrapper } from '@keystatic/core/content-components'
 export default config({
 	storage: {
 		kind: 'github',
-		repo: {
-			name: 'lazaro-osee',
-			owner: 'lazosee',
-		},
+		repo: 'lazosee/lazaro-osee',
+	},
+	cloud: {
+		project: '',
 	},
 	ui: {
 		brand: {
