@@ -12,7 +12,7 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
 ---
 
 <Layout title="Home - Osee Blog">
-  <section slot="hero" class="block w-full relative overflow-hidden min-h-[70dvh] content-center-safe justify-items-center-safe items-center justify-center text-center p-6 pb-20 font-grandstander">
+  <section slot="hero" class="block w-full relative overflow-hidden min-h-[70dvh] content-center-safe justify-items-center-safe items-center justify-center text-center p-6 pb-20 font-grandstander text-base sm:text-lg">
     <div class="relative z-10 max-w-3xl">
       <h1 class="block font-grandstander text-4xl md:text-7xl font-bold text-rose-900 dark:text-white mb-4 tracking-tight">
         Hi, I am <span class="text-rose-500">Lazaro</span>
@@ -25,11 +25,11 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
       </p>
 
       <div class="flex flex-wrap justify-center gap-4 mb-6">
-        <a href="/blog" class="block content-center-safe justify-items-center-safe px-8 py-3 bg-rose-950 dark:bg-white text-white dark:text-rose-900 font-semibold rounded-full corner-squircle hover:scale-105 transition-transform">
+        <a href="/posts" class="block text-xl font-medium content-center-safe justify-items-center-safe px-8 py-3 bg-rose-950 dark:bg-white text-white dark:text-rose-900 rounded-full corner-squircle hover:scale-105 transition-transform">
           Read the Blog
         </a>
         <!-- {/* -->
-        <a href="/#work" class="px-8 py-3 border-2 border-rose-400 dark:border-rose-800 font-semibold rounded-full corner-squircle hover:bg-rose-50 dark:hover:bg-rose-900 transition-colors">
+        <a href="/#work" class="px-8 py-3 text-xl font-medium border-2 border-rose-400 dark:border-rose-800 rounded-full corner-squircle hover:bg-rose-50 dark:hover:bg-rose-900 transition-colors">
           View My Work
         </a>
         <!-- */} -->
