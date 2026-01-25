@@ -7,7 +7,12 @@ interface Props {
 const { 'class': cn } = Astro.props;
 ---
 
-<div class:list={["text-2xl font-grandstander", cn]}>
+<div class:list={["text-2xl font-grandstander italic", cn]}>
+    {/*
+    <blockquote class="">
+        <slot />
+    </blockquote>
+    */}
     <slot />
 </div>
-<HrIcon />
+<HrIcon icon='book' />

@@ -1,0 +1,61 @@
+---
+export const prerender = true;
+
+import Layout from "@/layouts/Layout.astro";
+
+---
+
+<Layout title="What I Use">
+    <section class="max-w-4xl mx-auto p-6 min-h-screen font-grandstander">
+        <h1 class="text-4xl font-bold font-grandstander tracking-tight text-slate-900 dark:text-white mb-6">
+            What I use
+        </h1>
+        <p class="prose-lg dark:prose-invert mb-12 font-grandstander italic">
+            Here is a collection of all the tools I use in my day to day <i class="inline">creative</i> activity.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            
+            <div class="prose dark:prose-invert">
+            <h2 class="border-b pb-2">Programming</h2>
+            <ul class="list-none pl-0 flex flex-wrap gap-2">
+                <li><a href="https://astro.build" target="_blank" class="no-underline px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-500 hover:text-white transition-colors">Astro</a></li>
+                <li><a href="https://markdoc.dev" target="_blank" class="no-underline px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-500 hover:text-white transition-colors">Markdoc</a></li>
+                <li><a href="https://tailwindcss.com" target="_blank" class="no-underline px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-500 hover:text-white transition-colors">Tailwind CSS</a></li>
+                <li><a href="https://keystatic.com" target="_blank" class="no-underline px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-500 hover:text-white transition-colors">Keystatic CMS</a></li>
+                <li><a href="https://vercel.org" target="_blank" class="no-underline px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-500 hover:text-white transition-colors">Vercel</a></li>
+                <li><a href="https://netlify.com" target="_blank" class="no-underline px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-500 hover:text-white transition-colors">Netlify</a></li>
+                <li><a href="https://supabase.com" target="_blank" class="no-underline px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-500 hover:text-white transition-colors">Supabase</a></li>
+                <li><a href="https://flutter.dev" target="_blank" class="no-underline px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-500 hover:text-white transition-colors">Flutter</a></li>
+                <li><a href="https://code.visualstudio.com" target="_blank" class="no-underline px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-500 hover:text-white transition-colors">VS Code</a></li>
+            </ul>
+            </div>
+
+            <div class="prose dark:prose-invert">
+            <h2 class="border-b pb-2">Architecture, Art & 3D</h2>
+            
+            <div class="mt-6">
+                <h3 class="text-lg font-semibold mb-2">Software</h3>
+                <ul class="list-disc pl-5 space-y-1">
+                <li><a href="https://myarchicad.graphisoft.com/" target="_blank" class="hover:text-sky-500">Archicad</a></li>
+                <li><a href="https://www.autodesk.com/uk/products/revit/overview" target="_blank" class="hover:text-sky-500">Revit</a></li>
+                <li><a href="https://blender.org" target="_blank" class="hover:text-sky-500">Blender</a></li>
+                </ul>
+            </div>
+
+            <div class="mt-6">
+                <h3 class="text-lg font-semibold mb-2">Tools & Stationery</h3>
+                <ul class="list-disc pl-5 space-y-1">
+                <li><a href="https://artlineusa.com/" target="_blank" class="hover:text-sky-500">Artline Pens</a></li>
+                <li>
+                    <a href="https://www.prismacolor.com/" target="_blank" class="hover:text-sky-500">Prismacolor</a>
+                    {" & "}
+                    <a href="https://www.faber-castell.com/" target="_blank" class="hover:text-sky-500"> Faber-Castell</a></li>
+                <li><a href="https://en.canson.com/" target="_blank" class="hover:text-sky-500">Canson Multimedia Paper</a></li>
+                </ul>
+            </div>
+            </div>
+
+        </div>
+    </section>
+</Layout>

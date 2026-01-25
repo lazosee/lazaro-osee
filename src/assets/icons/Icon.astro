@@ -1,11 +1,11 @@
 ---
-import type { SvgComponent } from 'astro/types';
+import type { HTMLAttributes, SvgComponent } from 'astro/types';
 import type { IconName } from './icon';
 
-export interface Props {
+export interface Props extends HTMLAttributes<"svg"> {
     name: IconName;
 }
-const { name } = Astro.props;
+const { name, ...rest } = Astro.props;
 
 if (!name) return ""
 
@@ -13,4 +13,4 @@ const Comp = (await import(`./${name}/index.svg`)).default as SvgComponent & Ima
 
 ---
 
-<Comp />
+<Comp {...rest} />

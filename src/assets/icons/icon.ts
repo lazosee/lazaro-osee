@@ -1,6 +1,6 @@
 import type { SvgComponent } from 'astro/types'
 
-export type IconName = 'github' | 'bluesky' | 'twitter' | 'move-right'
+export type IconName = 'github' | 'bluesky' | 'twitter' | 'move-right' | 'sun' | 'moon' | 'book'
 
 export { default as Icon } from './Icon.astro'
 

@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@astrojs/markdoc": "^0.12.9",
+    "@astrojs/node": "^9.5.2",
     "@astrojs/react": "^4.2.0",
+    "@astrojs/vercel": "^9.0.4",
     "@expressive-code/plugin-line-numbers": "^0.41.6",
     "@fontsource/architects-daughter": "^5.2.7",
     "@fontsource/atkinson-hyperlegible": "^5.2.8",
@@ -23,6 +25,7 @@
     "@types/react-dom": "^19.0.3",
     "astro": "^5.2.5",
     "astro-expressive-code": "^0.41.6",
+    "dotenv": "^17.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.1.18"

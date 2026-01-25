@@ -80,3 +80,5 @@ export class ThemeManager {
 		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 	}
 }
+
+export const themeManager = new ThemeManager()

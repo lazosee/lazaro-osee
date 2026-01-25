@@ -2,10 +2,20 @@ import markdoc from '@astrojs/markdoc'
 import react from '@astrojs/react'
 import keystatic from '@keystatic/astro'
 import { defineConfig } from 'astro/config'
+import { config } from 'dotenv'
 
 import tailwindcss from '@tailwindcss/vite'
 
 import expressiveCode from 'astro-expressive-code'
+
+import node from '@astrojs/node'
+import vercel from '@astrojs/vercel'
+
+config({ quiet: true })
+
+const isProd = process.env.NODE_ENV === 'production'
+
+console.log(adapter.name)
 
 // https://astro.build/config
 export default defineConfig({
@@ -19,9 +29,11 @@ export default defineConfig({
 			shiki: true,
 		}),
 	],
+
 	devToolbar: {
 		enabled: false,
 	},
+
 	i18n: {
 		defaultLocale: 'en-US',
 		locales: ['en-US', 'es-ES'],
@@ -33,4 +45,9 @@ export default defineConfig({
 	vite: {
 		plugins: [tailwindcss()],
 	},
+
+	output: 'server',
+	adapter: isProd
+		? vercel({ edgeMiddleware: true, isr: true, webAnalytics: { enabled: true } })
+		: node({ mode: 'standalone' }),
 })
