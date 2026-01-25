@@ -31,6 +31,181 @@ npm install markdoc
 
 > This is  a sample blockquote
 
+\# Architecture Overview
+
+The diagram below provides a high-level architecture overview of a typical cloud-native web application: edge (CDN, load balancer), frontend clients, API gateway, backend microservices, databases, caches, message broker, background workers, object storage, and observability / CI-CD.
+
+```mermaid
+
+flowchart LR
+
+  %% Clients & Edge
+
+  subgraph Clients
+
+    U[Users<br/>(Web / Mobile)]
+
+  end
+
+
+
+  subgraph Edge
+
+    CDN[CDN]
+
+    LB[API Gateway / Load Balancer]
+
+  end
+
+
+
+  U -->|HTTPS| CDN --> LB
+
+
+
+  %% Frontends
+
+  subgraph Frontend
+
+    FE[Web App (SPA)]
+
+    Mobile[Mobile App]
+
+  end
+
+
+
+  LB --> FE
+
+  LB --> Mobile
+
+
+
+  FE -->|REST / gRPC / WebSocket| API[Backend API]
+
+  Mobile -->|REST / gRPC| API
+
+
+
+  %% Backend services
+
+  subgraph BackendServices
+
+    AuthS[Auth Service<br/>(OAuth / OpenID)]
+
+    UserS[User Service]
+
+    OrderS[Order Service]
+
+    InventoryS[Inventory Service]
+
+    Worker[Background Workers]
+
+  end
+
+
+
+  API -->|JWT / OAuth| AuthS
+
+  API -->|HTTP / gRPC| UserS
+
+  API -->|HTTP / gRPC| OrderS
+
+  API -->|HTTP / gRPC| InventoryS
+
+
+
+  OrderS -->|events| MQ[Message Broker<br/>(Kafka / RabbitMQ)]
+
+  MQ --> Worker
+
+  Worker -->|writes| OrderS
+
+
+
+  %% Data plane
+
+  subgraph Data
+
+    Primary[(Postgres Primary)]
+
+    Replicas[(Read Replicas)]
+
+    Cache[(Redis Cache)]
+
+    ObjectStore[(S3 / Object Storage)]
+
+  end
+
+
+
+  UserS -->|CRUD| Primary
+
+  OrderS -->|CRUD| Primary
+
+  InventoryS -->|CRUD| Primary
+
+
+
+  Primary --> Replicas
+
+  InventoryS -->|cache reads/writes| Cache
+
+
+
+  FE -->|static assets| ObjectStore
+
+  CDN --> ObjectStore
+
+
+
+  %% Infra & Observability
+
+  subgraph Infra
+
+    CI[CI / CD<br/>(GitHub Actions)]
+
+    Observability[Monitoring & Logging<br/>(Prometheus, Grafana, ELK)]
+
+    Secrets[Secrets Manager<br/>(Vault / KMS)]
+
+  end
+
+
+
+  CI -->|deploys| LB
+
+  CI -->|deploys| BackendServices
+
+
+
+  BackendServices -->|metrics / logs| Observability
+
+  LB -->|access logs| Observability
+
+  BackendServices -->|secrets| Secrets
+
+
+
+  %% Notes / relationships
+
+  style CDN fill:#f9f,stroke:#333,stroke-width:1px
+
+  style LB fill:#ffebb3,stroke:#333,stroke-width:1px
+
+  style API fill:#e6f7ff,stroke:#333,stroke-width:1px
+
+  style Primary fill:#fff0f0,stroke:#333,stroke-width:1px
+
+  style MQ fill:#e8ffe8,stroke:#333,stroke-width:1px
+
+```
+
+Notes:
+
+- This is a high-level, technology-agnostic overview. Replace components with your preferred technologies (e.g., Postgres -> Aurora, Kafka -> Pub/Sub) as needed.
+- To render the diagram, use a Markdown viewer or editor that supports Mermaid (VS Code with Mermaid Preview, GitHub (rendering available in some contexts), or mermaid.live).
+
 ```diff
   function thisIsJavaScript() {
     // This entire block gets highlighted as JavaScript,
