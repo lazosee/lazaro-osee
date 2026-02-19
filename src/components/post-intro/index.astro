@@ -7,12 +7,34 @@ interface Props {
 const { 'class': cn } = Astro.props;
 ---
 
-<div class:list={["text-2xl font-grandstander italic", cn]}>
-    {/*
-    <blockquote class="">
-        <slot />
-    </blockquote>
-    */}
+<div class:list={["a", cn]}>
     <slot />
 </div>
 <HrIcon icon='book' />
+
+<style>
+    .a {
+        position: relative;
+        display: flex;
+        margin-block: --space(4);
+        flex-direction: row;
+        flex-wrap: wrap;
+        font-size: 1.4rem;
+        font-style: italic;
+        font-family: "Grandstander", sans-serif;
+    }
+    .a::before, .a::after {
+        content: '"';
+        position: absolute;
+        font-size: 6rem;
+        color: var(--em-color);
+    }
+    .a::before {
+        top: calc(--space(2) * -6);
+        left: calc(--space(2) * -2); 
+    }
+    .a::after {
+        bottom: calc(--space(2) * -12);
+        right: calc(--space(2) * 2); 
+    }
+</style>
