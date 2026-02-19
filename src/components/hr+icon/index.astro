@@ -9,16 +9,24 @@ interface Props {
 const { icon, 'icon-props': rest } = Astro.props;
 ---
 
-<div class="flex w-full items-center">
+<div class="a">
     <!-- Left Line -->
-    <hr class="flex grow border-t border-current" />
+    <hr class="b" />
 
 
     <!-- Icon Container -->
-    <div class="mx-4">
+    <div class="icon__wrapper">
         <Icon name={icon} />
     </div>
 
     <!-- Right Line -->
-    <hr class="flex grow border-t border-current" />
+    <hr class="c" />
 </div>
+
+<style>
+    .a { display: flex; flex-direction: row; width: stretch; align-items: center; justify-content: center; }
+    .b, .c { display: flex; width: stretch; flex-grow: 1; border: none; border-top: 0.1rem solid; }
+    .icon__wrapper {
+        margin-inline: --space(4);
+    }
+</style>

@@ -12,58 +12,247 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
 ---
 
 <Layout title="Home - Osee Blog">
-  <section slot="hero" class="block w-full relative overflow-hidden min-h-[70dvh] content-center-safe justify-items-center-safe items-center justify-center text-center p-6 pb-20 font-grandstander text-base sm:text-lg">
-    <div class="relative z-10 max-w-3xl">
-      <h1 class="block font-grandstander text-4xl md:text-7xl font-bold text-rose-900 dark:text-white mb-4 tracking-tight">
-        Hi, I am <span class="text-rose-500">Lazaro</span>
+  <section slot="hero" class="hero">
+    <div class="hero__div">
+      <h1 class="title">
+        Hi, I am <span>Lazaro</span>
       </h1>
       
-      <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+      <p class="sub-title">
         Architecture student by day, software developer by night. 
         I design <span class="italic font-medium text-slate-800 dark:text-slate-200">physical spaces</span> 
         and build <span class="italic font-medium text-slate-800 dark:text-slate-200">digital ones</span>.
       </p>
 
-      <div class="flex flex-wrap justify-center gap-4 mb-6">
-        <a href="/posts" class="block text-xl font-medium content-center-safe justify-items-center-safe px-8 py-3 bg-rose-950 dark:bg-white text-white dark:text-rose-900 rounded-full corner-squircle hover:scale-105 transition-transform">
+      <div class="ctas__div">
+        <a href="/posts" class="cta blog-cta">
           Read the Blog
         </a>
-        <!-- {/* -->
-        <a href="/#work" class="px-8 py-3 text-xl font-medium border-2 border-rose-400 dark:border-rose-800 rounded-full corner-squircle hover:bg-rose-50 dark:hover:bg-rose-900 transition-colors">
+        <a href="/#work" class="cta work-cta">
           View My Work
         </a>
-        <!-- */} -->
       </div>
     </div>
 
-    <div class="absolute bottom-10 animate-bounce">
+    <div class="svg-wrapper">
       <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
       </svg>
     </div>
   </section>
-  <section class="block content-center-safe justify-items-center-safe p-2 px-3">
-    <ul class="list-none block w-full max-w-[60ch] content-center-safe justify-items-start">
-      <h2 class="font-grandstander font-bold text-rose-500">Recent posts</h2>
+  <section class="posts-section">
+    <ul class="posts__list">
+      <h2 class="posts__title">Here are some of my recent posts</h2>
       <HrIcon icon="book" /> 
 
       {posts.map((p, i) => (
-        <li class="block px-1 py-2 content-center-safe justify-items-center-safe">
-          <article class="block gap-4">
-            <a href={`/posts/${p.slug}`} class="block mb-6 text-sky-700 dark:text-sky-500 no-underline hover:underline">
-              <h4 class="">{p.data.title}</h4>
+        <li>
+          <article>
+            <a href={`/posts/${p.slug}`} class="post__link">
+              <h3 class="">{p.data.title}</h3>
             </a>
-            <p class="prose dark:prose-invert">{p.data.excerpt}</p>
-            <a href={`/posts/${p.slug}`} class="block underline text-link py-2 my-2">
-              <span class="flex gap-2">
-                Read more
-                <Icon name="move-right" />
-              </span>
+            <p class="excerpt">{p.data.excerpt}</p>
+            <a href={`/posts/${p.slug}`} class="post__read-more">
+              <span>Read more</span>
+              <Icon name="move-right" />
             </a>
           </article>
         </li>
-        <span>{i < posts.length ? <hr class="my-6" /> : ""}</span>
+        <div>
+          {(i + 1) < posts.length 
+            ? <hr class="after-article" /> 
+            : ""
+          }
+        </div>
       ))}
     </ul>
   </section>
 </Layout>
+
+<style>
+  section {
+    padding: 0;
+    margin: 0;
+  }
+  .hero {
+    & {
+      display: block;
+      width: stretch;
+      position: relative;
+      overflow: hidden;
+      min-height: 70dvh;
+      padding: --space(1.5);
+      padding-bottom: --space(5);
+      font-family: "Grandstander", sans-serif;
+      font-size: 1.25rem;
+      line-height: 1.75;
+      align-content: center safe;
+      justify-items: center safe;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero__div {
+      & {
+        /* relative z-10 max-w-3xl */
+        width: stretch;
+        margin-inline: auto;
+        position: relative;
+        z-index: 10;
+        max-width: 48rem;
+        justify-items: center safe;
+        align-content: center safe;
+        align-items: center;
+        justify-content: center;
+      }
+      .title {
+        & {
+          display: block;
+          font-size: calc(2.6rem + 1vw);
+          font-family: "Grandstander", sans-serif;
+          font-weight: bold;
+        }
+        span {
+          color: light-dark(rebeccapurple, rgb(166, 37, 37));
+        }
+      }
+      p.sub-title {
+        margin-bottom: --space(8);
+      }
+      .ctas__div {
+        &{
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          gap: max(--space(4), 1rem);
+          margin-bottom: --space(2);
+        }
+        .cta {
+          &{
+            display: flex;
+            align-items: center safe;
+            justify-content: center safe;
+            text-align: justify;
+            text-box: trim-both ex alphabetic;
+            padding: --space(2) --space(3);
+            border-radius: 16rem;
+            corner-shape: squircle;
+            text-decoration: none;
+            transition: transform 0.2s ease-in-out;
+          }
+          &:hover {
+            transform: scale(1.15);
+          }
+        }
+        .blog-cta {
+          background-color: light-dark(rgb(121, 29, 29), white);
+          color: light-dark(white, rgb(121, 29, 29));
+        }
+        .work-cta {
+          /* px-8 py-3 text-xl font-medium border-2 border-rose-400 dark:border-rose-800 rounded-full corner-squircle hover:bg-rose-50 dark:hover:bg-rose-900 transition-colors */
+          border: light-dark(rgb(121, 29, 29), white) 0.2rem solid;
+          color: light-dark(black, white);
+        }
+      }
+    }
+    .svg-wrapper {
+      & {
+        /* absolute bottom-10 animate-bounce */
+        position: absolute;
+        bottom: --space(5);
+        left: 50%;
+        translate: -50% 0%;
+        animation: bounceY 1s ease-in-out infinite;
+      }
+      svg {
+        width: --space(12);
+        height: --space(12);
+      }
+    }
+  }
+  .posts-section {
+    &{
+      display: block;
+      width: stretch;
+      max-width: 80ch;
+      margin-inline: auto;
+      align-content: center safe;
+      justify-items: center safe;
+      padding: 0 --space(4);
+    }
+    ul.posts__list {
+      &{
+        display: block;
+        list-style: none;
+        width: stretch;
+        max-width: 60ch;
+        padding: 0;
+        margin-inline: auto;
+        justify-items: center safe;
+        align-content: center safe;
+      }
+      .posts__title {
+        font-size: xx-large;
+        font-family: "Grandstander", sans-serif;
+        font-weight: normal;
+        color: light-dark(rgb(121, 29, 29), white);
+        line-height: 1.5;
+      }
+      li {
+        & {
+          display: block;
+          padding: --space(0.5) --space(0.25);
+          justify-items: center safe;
+          align-content: center safe;
+        }
+        article {
+          & {
+            display: block;
+            gap: --space(1);
+            font-size: 1.2rem;
+          }
+          .post__link {
+            &{
+              display: block;
+              margin-bottom: --space(1);
+              text-decoration: none;
+              color: light-dark(black, white);
+              transition: all 0.7s ease-in-out;
+              font-weight: normal;
+            }
+            &:hover {
+              text-decoration: underline  var(--link-color);
+              text-underline-offset: 0.2rem;
+            }
+            h3 {
+              & {
+                display: block;
+                width: stretch;
+                font-weight: normal;
+                font-family: "Grandstander", sans-serif;
+                line-height: 1.5;
+                color: var(--link-color);
+              }
+            }
+          }
+          p.excerpt {
+            /*  */
+          }
+          .post__read-more {
+            /* block underline text-link py-2 my-2 */
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            text-decoration: underline;
+            text-underline-offset: 0.2rem;
+            color: var(--link-color);
+            gap: --space(2);
+          }
+        }
+      }
+      hr.after-article { margin: --space(9) auto --space(3); border: none; border-top: 0.1rem solid; }
+    }
+  }
+</style>

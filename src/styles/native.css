@@ -1,0 +1,34 @@
+@import '@fontsource/quicksand';
+@import '@fontsource/comfortaa';
+@import '@fontsource/architects-daughter';
+@import '@fontsource/atkinson-hyperlegible';
+@import '@fontsource/grandstander';
+
+:root {
+	--link-color: light-dark(rgb(47, 110, 114), rgb(93, 240, 250));
+	--em-color: light-dark(rgb(95, 70, 39), rgb(250, 179, 93));
+}
+
+@function --space(--value) {
+	result: calc(var(--value) * 4px);
+}
+
+@function --alpha(--color, --alpha: 1) {
+	result: rgba(var(--color), var(--alpha, 1));
+}
+
+@function --media-flex() {
+	result: if(media(min-width: 768px): row; else: column);
+}
+
+@keyframes bounceY {
+	0% {
+		transform: translateY(0%);
+	}
+	50% {
+		transform: translateY(-10%);
+	}
+	100% {
+		transform: translateY(0%);
+	}
+}
