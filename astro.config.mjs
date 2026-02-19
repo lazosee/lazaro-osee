@@ -4,8 +4,6 @@ import keystatic from '@keystatic/astro'
 import { defineConfig } from 'astro/config'
 import { config } from 'dotenv'
 
-import tailwindcss from '@tailwindcss/vite'
-
 import expressiveCode from 'astro-expressive-code'
 
 import node from '@astrojs/node'
@@ -14,8 +12,6 @@ import vercel from '@astrojs/vercel'
 config({ quiet: true })
 
 const isProd = process.env.NODE_ENV === 'production'
-
-console.log(isProd)
 
 // https://astro.build/config
 export default defineConfig({
@@ -43,7 +39,7 @@ export default defineConfig({
 	},
 
 	vite: {
-		plugins: [tailwindcss()],
+		plugins: [],
 	},
 
 	output: 'server',
