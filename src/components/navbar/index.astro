@@ -1,7 +1,7 @@
 ---
 import { Icon } from "@/assets/icons/icon";
-import { Wrapper } from "..";
 import type { HTMLAttributes } from "astro/types";
+import { Wrapper } from "..";
 
 interface Props extends HTMLAttributes<"nav"> {
     links: {
@@ -10,25 +10,110 @@ interface Props extends HTMLAttributes<"nav"> {
     }[]
 }
 
-const { links} = Astro.props;
+const { links } = Astro.props;
 ---
 
-<Wrapper class="block sm:flex gap-3 content-center-safe justify-items-center-safe">
-    <a class="logo block font-arch font-extrabold text-white text-4xl mb-4" href="/">lazaro osee</a>
-    <nav class="block w-full max-w-[80ch] content-center-safe justify-items-center-safe">
-        <ul class="list-none flex sm:flex gap-3">
+<Wrapper class="wrapper">
+    <a class="logo" href="/">lazaro osee</a>
+    <nav>
+        <ul>
             {links.map((link) => (
-                <li class="list-none">
-                    <a class="bg-gray-50 px-3 py-1 shadow-[inset_0_-3em_3em_rgb(0_100_0/30%),0_0_0_2px_white] hover:shadow-[0_0_0_2px_white] focus:shadow-[0_0_0_2px_white] " href={link.href}>{link.label}</a>
+                <li>
+                    <a href={link.href}>{link.label}</a>
                 </li>
             ))} 
             <button id="theme-toggle">
-                <Icon id="theme-toggle-icon" name="sun" />
+                <Icon id="theme-toggle-icon" name="sun" style="--size: 5rem" />
             </button>
         </ul>
     </nav>
-   
 </Wrapper>
 
-<script>
-</script>
+<style>
+    .wrapper {
+        /* block sm:flex gap-3 content-center-safe justify-items-center-safe */
+        & {
+            /* display: block; */
+            justify-items: center safe;
+            align-content: center safe;
+            flex-wrap: wrap;
+            gap: --space(0.75);
+            justify-items: center;
+            align-content: center;
+        }
+
+        .logo {
+            /*  block font-arch font-extrabold text-white text-4xl mb-4 */
+            display: block;
+            font-family: "Grandstander", sans-serif;
+            font-weight: 500;
+            font-size: xx-large;
+            color: light-dark(black, white);
+            text-align: center;
+            text-decoration: none;
+            font-size: clamp(large, x-large, xx-large);
+            margin-bottom: --space(1);
+        }
+        nav {
+            & {
+                /* block w-full max-w-[80ch] content-center-safe justify-items-center-safe */
+                display: block;
+                width: stretch;
+                max-width: 80ch;
+                justify-items: center;
+                align-content: center;
+            }
+
+            ul {
+                & {
+                    /* list-none flex sm:flex gap-3 */
+                    list-style: none;
+                    display: flex;
+                    flex-wrap: wrap;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    gap: --space(4);
+                }
+
+                li {
+                    & {
+                        list-style: none;
+                    };
+                }
+                li a, button {
+                    & {
+                    padding: --space(1.25) --space(2);
+                    background-color: --alpha(gray / 50%);
+                    color: light-dark(black, white);
+                    text-decoration: none;
+                    box-shadow: inset 0 -3em 3em rgb(0 100 0 / 10%), 0 0 0 2px light-dark(black, white);
+                    }
+                    &:hover,
+                    &:focus {
+                        box-shadow: inset 0 -3em 3em rgb(0 100 0 / 10%), 0 0 0 2px light-dark(black, white);
+                        text-decoration: underline solid light-dark(black, white);
+                    }
+                    &:active, .active {
+                        box-shadow: inset 0 -3em 3em transparent, 0 0 0 2px light-dark(black, white);
+                    }
+                }
+                button {
+                    font-size: var(--size, 2rem);
+                    outline: none;
+                    border: none;
+                    width: 2rem;
+                    height: 2rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    /* background-color: transparent; */
+                    cursor: pointer;
+                    color: light-dark(black, white);
+                    border-radius: 100%;
+                    corner-radius: squircle;
+                }
+            }
+        }
+    }
+</style>

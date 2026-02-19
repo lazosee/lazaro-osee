@@ -13,3 +13,5 @@ export const humanDate = (
 		month,
 		day,
 	})
+
+export const longDate = (date: Date) => date.toLocaleDateString(undefined, { dateStyle: 'long' })

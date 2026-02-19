@@ -6,39 +6,156 @@ import Layout from '@/layouts/Layout.astro';
 import { Icon } from '@/assets/icons/icon';
 import { postsFilter } from '@/utils/collections/filters';
 import { HrIcon } from '@/components';
-import { humanDate } from '@/utils/posts/date';
+import { humanDate, longDate } from '@/utils/posts/date';
 
 const posts = (await getCollection('posts', postsFilter['filter-published-on-production'])).sort((a,b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <Layout title="Posts - Osee Blogs">
-  <section class="block content-center-safe justify-items-center-safe p-2 px-3">
-    <ul class="list-none block w-full max-w-[80ch] content-center-safe justify-items-start">
-      <h2 class="font-grandstander font-bold text-rose-500">All my posts over the years.</h2>
+  <section class="posts-section">
+    <ul class="posts__list">
+      <h1 class="posts__title">All my posts over the years.</h1>
       <HrIcon icon="book" /> 
     
       {posts.map((p, i) => (
         <li class="block px-1 py-2 content-center-safe justify-items-center-safe">
-          <div class="flex w-full gap-10">
+          <div class="post__wrapper">
             <time class="font-grandstander" datetime={p.data.pubDate.toISOString()}>
-                {p.data.pubDate.toLocaleDateString(undefined, {dateStyle: "long"})}
+                {longDate(p.data.pubDate)}
             </time>
             <article class="block gap-4">
-              <a href={`/posts/${p.slug}`} class="block mb-6 text-sky-700 dark:text-sky-500 no-underline hover:underline">
-                <h4 class="">{p.data.title}</h4>
+              <a href={`/posts/${p.slug}`} class="post__link">
+                <h3 class="">{p.data.title}</h3>
               </a>
-              <p class="prose dark:prose-invert">{p.data.excerpt}</p>
-              <a href={`/posts/${p.slug}`} class="block underline text-link py-2 my-2">
-                <span class="flex gap-2">
-                  Read more
-                  <Icon name="move-right" />
-                </span>
+              <p class="excerpt">{p.data.excerpt}</p>
+              <a href={`/posts/${p.slug}`} class="post__read-more">
+                <span>Read more</span>
+                <Icon name="move-right" />
               </a>
             </article>
           </div>
         </li>
-        <span>{i < posts.length ? <hr class="my-6" /> : ""}</span>
+        <span>{i < posts.length ? <hr class="after-article" /> : ""}</span>
       ))}
     </ul>
   </section>
 </Layout>
+
+<style>
+  section {}
+  .posts-section {
+    &{
+      display: block;
+      width: stretch;
+      max-width: 80ch;
+      margin-inline: auto;
+      align-content: center safe;
+      justify-items: center safe;
+      padding: 0 --space(4);
+    }
+    ul.posts__list {
+      &{
+        display: block;
+        list-style: none;
+        width: stretch;
+        padding: 0;
+        margin-inline: auto;
+        justify-items: center safe;
+        align-content: center safe;
+      }
+      .posts__title {
+        font-size: xx-large;
+        font-family: "Grandstander", sans-serif;
+        font-weight: normal;
+        color: light-dark(rgb(121, 29, 29), white);
+        line-height: 1.5;
+      }
+      li {
+        & {
+          display: block;
+          padding: --space(0.5) --space(0.25);
+          justify-items: center safe;
+          align-content: center safe;
+        }
+        .post__wrapper {
+          & {
+            display: flex;
+            margin-top: --space(4);
+            flex-direction: if(
+              media(width < 400px): column;
+              else: row;
+            );
+            align-items: if(
+              media(width < 400px): start;
+              else: start safe;
+            );
+            justify-content: flex-start;
+            gap: if(
+              media(width < 400px): --space(1);
+              else: --space(16);
+            );
+          }
+          time {
+            font-size: 1.2rem;
+            margin: if(
+              media(width < 400px): 0;
+              else: --space(6) 0 0 0
+            )
+          }
+          article {
+            & {
+              display: block;
+              gap: --space(1);
+              font-size: 1.2rem;
+              flex: 1;
+            }
+            .post__link {
+              &{
+                display: block;
+                margin-bottom: --space(1);
+                text-decoration: none;
+                color: light-dark(black, white);
+                transition: all 0.7s ease-in-out;
+                font-weight: normal;
+              }
+              &:hover {
+                text-decoration: underline  var(--link-color);
+                text-underline-offset: 0.2rem;
+              }
+              h3 {
+                & {
+                  display: block;
+                  width: stretch;
+                  font-weight: normal;
+                  font-family: "Grandstander", sans-serif;
+                  line-height: 1.5;
+                  color: var(--link-color);
+                }
+              }
+            }
+            p.excerpt {
+              /*  */
+            }
+            .post__read-more {
+              /* block underline text-link py-2 my-2 */
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: flex-start;
+              text-decoration: underline;
+              text-underline-offset: 0.2rem;
+              color: var(--link-color);
+              gap: --space(2);
+            }
+          }
+        }
+      }
+      hr.after-article { 
+        margin: --space(9) auto --space(3); 
+        border: none; 
+        border-top: 0.1rem solid; 
+      }
+    }
+  }
+</style>
+
