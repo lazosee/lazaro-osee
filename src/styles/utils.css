@@ -1,0 +1,30 @@
+* {
+	corner-shape: squircle;
+}
+
+button {
+	padding: --space(2) --space(4);
+	font-size: 1.1rem;
+	corner-shape: squircle;
+	border-color: transparent;
+	outline-color: transparent;
+}
+
+image {
+	max-width: 100%;
+	height: auto;
+	vertical-align: middle;
+	font-style: italic;
+	background-repeat: no-repeat;
+	background-size: cover;
+	shape-margin: 0.75rem;
+}
+
+.cta {
+	border-radius: 2rem;
+	font-family: 'Grandstander', sans-serif;
+}
+
+.icon-primary {
+	fill: light-dark(rgb(121, 29, 29), white);
+}

@@ -1,0 +1,71 @@
+---
+import type { PostMetadata } from "@/types/metadata";
+
+interface Props extends PostMetadata {};
+
+const { slug, title, excerpt } = Astro.props;
+---
+
+<article>
+    <a href={`/posts/${slug}`} class="post__link">
+        <h3 class="">{title}</h3>
+    </a>
+    <p class="excerpt">{excerpt}</p>
+    {/*
+    <a href={`/posts/${slug}`} class="post__read-more">
+        <span>Read more</span>
+        <Icon name="move-right" />
+    </a>
+    */} 
+</article>
+
+<style>
+    article {
+        & {
+            display: block;
+            gap: --space(1);
+            font-size: 1.2rem;
+            flex: 1;
+        }
+        .post__link {
+            &{
+            display: block;
+            margin-bottom: --space(1);
+            text-decoration: none;
+            color: light-dark(black, white);
+            transition: all 0.7s ease-in-out;
+            font-weight: normal;
+            }
+            &:hover {
+                text-decoration: underline  var(--link-color);
+                text-underline-offset: 0.2rem;
+            }
+            h3 {
+            & {
+                display: block;
+                width: stretch;
+                font-weight: normal;
+                font-family: "Grandstander", sans-serif;
+                line-height: 1.5;
+                color: light-dark(rgb(121, 29, 29), rgb(255, 174, 174)); /*var(--link-color);*/
+            }
+            }
+        }
+        p.excerpt {
+            /*  */
+        }
+        .post__read-more {
+            /* block underline text-link py-2 my-2 */
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            text-decoration: underline;
+            text-underline-offset: 0.2rem;
+            color: var(--link-color);
+            gap: --space(2);
+        }
+    }
+</style>
+
+

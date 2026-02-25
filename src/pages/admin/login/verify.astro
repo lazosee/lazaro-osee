@@ -1,0 +1,16 @@
+---
+import OtpAuth from '@/components/react/OtpAuth';
+const email = Astro.url.searchParams.get("email");
+
+if (!email) {
+  return Astro.redirect("/admin/login", 302);
+}
+---
+
+<html>
+  <body>
+    <main class="flex justify-center items-center h-screen bg-gray-100">
+      <OtpAuth email={email} client:load />
+    </main>
+  </body>
+</html>

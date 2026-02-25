@@ -1,0 +1,20 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+const { category } = Astro.params
+if (!category) {
+    return new Response(null, { status: 404 });
+}
+---
+
+<Layout title="Some of my work">
+    <aside>
+        hello world
+    </aside>
+    <main>
+        <section>
+            <h1 class="title">Some of my work for {category}</h1>
+            <p class="subtitle">This page is under construction.</p>
+        </section>
+    </main>
+</Layout>

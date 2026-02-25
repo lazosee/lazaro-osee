@@ -1,6 +1,21 @@
 import type { SvgComponent } from 'astro/types'
+import { z } from 'astro/zod'
 
-export type IconName = 'github' | 'bluesky' | 'twitter' | 'move-right' | 'sun' | 'moon' | 'book'
+export const IconNameSchema = z.enum([
+	'github',
+	'bluesky',
+	'twitter',
+	'move-right',
+	'sun',
+	'moon',
+	'book',
+	'quote',
+	'bell',
+	'auto-awesome-mosaic',
+	'code',
+])
+
+export type IconName = z.infer<typeof IconNameSchema>
 
 export { default as Icon } from './Icon.astro'
 

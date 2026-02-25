@@ -22,9 +22,11 @@ const { links } = Astro.props;
                     <a href={link.href}>{link.label}</a>
                 </li>
             ))} 
-            <button id="theme-toggle">
-                <Icon id="theme-toggle-icon" name="sun" style="--size: 5rem" />
-            </button>
+            <li>
+                <button id="themeBtn" onclick="toggleTheme()">
+                    <Icon id="theme-toggle-icon" name="sun" style="--size: 5rem" />
+                </button>
+            </li>
         </ul>
     </nav>
 </Wrapper>
@@ -56,7 +58,6 @@ const { links } = Astro.props;
         }
         nav {
             & {
-                /* block w-full max-w-[80ch] content-center-safe justify-items-center-safe */
                 display: block;
                 width: stretch;
                 max-width: 80ch;
@@ -67,18 +68,23 @@ const { links } = Astro.props;
             ul {
                 & {
                     /* list-none flex sm:flex gap-3 */
+                    padding: 0;
+                    margin: clamp(1rem, 1.5rem + 1vw, 2rem) 0 0 0;
                     list-style: none;
                     display: flex;
                     flex-wrap: wrap;
                     flex-direction: row;
                     justify-content: center;
                     align-items: center;
-                    gap: --space(4);
+                    width: stretch;
+                    gap: --space(3);
                 }
 
                 li {
                     & {
                         list-style: none;
+                        border: none;
+                        outline-color: transparent;
                     };
                 }
                 li a, button {
@@ -87,20 +93,27 @@ const { links } = Astro.props;
                     background-color: --alpha(gray / 50%);
                     color: light-dark(black, white);
                     text-decoration: none;
-                    box-shadow: inset 0 -3em 3em rgb(0 100 0 / 10%), 0 0 0 2px light-dark(black, white);
+                    outline-color: transparent;
+                    transition: all 0.2s ease-in-out;
+                    cursor: pointer;
+                    border: 0.1rem solid;
+                    border-color: light-dark(rgb(0 0 0 / 10%), rgb(255 255 255 / 10%));
+                    border-radius: 2rem;
+                    corner-shape: squircle;
+                    /* box-shadow: inset 0 -3em 3em rgb(0 100 0 / 10%), 0 0 0 2px light-dark(black, white); */
                     }
                     &:hover,
                     &:focus {
-                        box-shadow: inset 0 -3em 3em rgb(0 100 0 / 10%), 0 0 0 2px light-dark(black, white);
+                        /* box-shadow: inset 0 -3em 3em rgb(0 100 0 / 10%), 0 0 0 2px light-dark(black, white); */
                         text-decoration: underline solid light-dark(black, white);
                     }
                     &:active, .active {
-                        box-shadow: inset 0 -3em 3em transparent, 0 0 0 2px light-dark(black, white);
+                        /* box-shadow: inset 0 -3em 3em transparent, 0 0 0 2px light-dark(black, white); */
                     }
                 }
                 button {
                     font-size: var(--size, 2rem);
-                    outline: none;
+                    outline-color: transparent;
                     border: none;
                     width: 2rem;
                     height: 2rem;
@@ -110,8 +123,6 @@ const { links } = Astro.props;
                     /* background-color: transparent; */
                     cursor: pointer;
                     color: light-dark(black, white);
-                    border-radius: 100%;
-                    corner-radius: squircle;
                 }
             }
         }

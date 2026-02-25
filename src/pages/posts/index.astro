@@ -1,41 +1,32 @@
 ---
 export const prerender = true;
 
-import { getCollection } from 'astro:content';
+import { ArticleCard, HrIcon } from '@/components';
 import Layout from '@/layouts/Layout.astro';
-import { Icon } from '@/assets/icons/icon';
 import { postsFilter } from '@/utils/collections/filters';
-import { HrIcon } from '@/components';
-import { humanDate, longDate } from '@/utils/posts/date';
+import { longDate } from '@/utils/posts/date';
+import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('posts', postsFilter['filter-published-on-production'])).sort((a,b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = (await getCollection('posts', postsFilter['filter-published-on-production']))
+  .sort((a,b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map((p) => ({...p.data, slug: p.slug, id: p.id}));
 ---
 
 <Layout title="Posts - Osee Blogs">
   <section class="posts-section">
-    <ul class="posts__list">
-      <h1 class="posts__title">All my posts over the years.</h1>
-      <HrIcon icon="book" /> 
-    
+    <h1 class="posts__title">All my posts over the years.</h1>
+    <HrIcon icon="book" /> 
+    <ul class="posts__list">    
       {posts.map((p, i) => (
         <li class="block px-1 py-2 content-center-safe justify-items-center-safe">
           <div class="post__wrapper">
-            <time class="font-grandstander" datetime={p.data.pubDate.toISOString()}>
-                {longDate(p.data.pubDate)}
+            <time class="font-grandstander" datetime={p.pubDate.toISOString()}>
+                {longDate(p.pubDate)}
             </time>
-            <article class="block gap-4">
-              <a href={`/posts/${p.slug}`} class="post__link">
-                <h3 class="">{p.data.title}</h3>
-              </a>
-              <p class="excerpt">{p.data.excerpt}</p>
-              <a href={`/posts/${p.slug}`} class="post__read-more">
-                <span>Read more</span>
-                <Icon name="move-right" />
-              </a>
-            </article>
+            <ArticleCard {...p} />
           </div>
+          <span>{i < posts.length ? <hr class="after-article" /> : ""}</span>
         </li>
-        <span>{i < posts.length ? <hr class="after-article" /> : ""}</span>
       ))}
     </ul>
   </section>
@@ -53,6 +44,13 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
       justify-items: center safe;
       padding: 0 --space(4);
     }
+    .posts__title {
+      font-size: xx-large;
+      font-family: "Grandstander", sans-serif;
+      font-weight: normal;
+      color: light-dark(rgb(121, 29, 29), white);
+      line-height: 1.5;
+    }
     ul.posts__list {
       &{
         display: block;
@@ -62,13 +60,6 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
         margin-inline: auto;
         justify-items: center safe;
         align-content: center safe;
-      }
-      .posts__title {
-        font-size: xx-large;
-        font-family: "Grandstander", sans-serif;
-        font-weight: normal;
-        color: light-dark(rgb(121, 29, 29), white);
-        line-height: 1.5;
       }
       li {
         & {
@@ -101,52 +92,6 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
               media(width < 400px): 0;
               else: --space(6) 0 0 0
             )
-          }
-          article {
-            & {
-              display: block;
-              gap: --space(1);
-              font-size: 1.2rem;
-              flex: 1;
-            }
-            .post__link {
-              &{
-                display: block;
-                margin-bottom: --space(1);
-                text-decoration: none;
-                color: light-dark(black, white);
-                transition: all 0.7s ease-in-out;
-                font-weight: normal;
-              }
-              &:hover {
-                text-decoration: underline  var(--link-color);
-                text-underline-offset: 0.2rem;
-              }
-              h3 {
-                & {
-                  display: block;
-                  width: stretch;
-                  font-weight: normal;
-                  font-family: "Grandstander", sans-serif;
-                  line-height: 1.5;
-                  color: var(--link-color);
-                }
-              }
-            }
-            p.excerpt {
-              /*  */
-            }
-            .post__read-more {
-              /* block underline text-link py-2 my-2 */
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: flex-start;
-              text-decoration: underline;
-              text-underline-offset: 0.2rem;
-              color: var(--link-color);
-              gap: --space(2);
-            }
           }
         }
       }

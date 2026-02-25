@@ -1,5 +1,6 @@
 // @ts-ignore
 import { iconNames } from '@/assets/icons'
+import { IconNameSchema } from '@/assets/icons/icon'
 import { defineCollection, reference, z } from 'astro:content'
 
 const posts = defineCollection({
@@ -31,4 +32,14 @@ const authors = defineCollection({
 		}),
 })
 
-export const collections = { posts, authors }
+export const workCategory = defineCollection({
+	type: 'data',
+	schema: z.object({
+		icon: IconNameSchema,
+		title: z.string(),
+		subtitle: z.string(),
+		featured: z.boolean().default(false),
+	}),
+})
+
+export const collections = { posts, authors, 'work-category': workCategory }

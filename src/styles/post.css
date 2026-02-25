@@ -1,3 +1,8 @@
+.bw-fill {
+	fill: light-dark(orange, rgb(186, 121, 0));
+	stroke: light-dark(orange, rgb(186, 121, 0));
+}
+
 .post__section {
 	& {
 		display: block;
@@ -6,7 +11,7 @@
 		margin-inline: auto;
 		justify-items: center safe;
 		min-height: 100dvh;
-		padding: 0;
+		padding: 0 2rem;
 		font-size: 1.25rem;
 		font-weight: normal;
 		line-height: 1.8;
@@ -86,15 +91,22 @@
 		}
 		blockquote {
 			& {
+				position: relative;
 				display: block;
 				width: stretch;
 				margin: 0;
 				padding-block: --space(2);
-				padding-inline: --space(4) --space(0.25);
+				padding-inline-start: --space(8);
+				padding-inline-end: --space(0.25);
 				border: none;
-				border-left: 1rem solid --alpha(var(--em-color) / 30%);
+				/* border-left: 1rem solid var(--em-color); */
 				border-radius: --space(16);
 				corner-shape: squircle;
+				font-weight: lighter;
+			}
+
+			&::before {
+				content: url('/quote.svg');
 			}
 		}
 	}

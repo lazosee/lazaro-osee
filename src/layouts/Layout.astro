@@ -1,8 +1,8 @@
 ---
 import { Footer, Navbar, Wrapper } from '@/components';
 import { links, socials } from '@/constants';
-import "@/styles/fonts";
 import '@/styles/native.css';
+import '@/styles/utils.css';
 import type { InferEntrySchema } from 'astro:content';
 import Analytics from '@vercel/analytics/astro'
 
@@ -21,8 +21,82 @@ const { title, post } = Astro.props;
 		<meta name="description" content="Astro description">
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href="https://cdn.jsdelivr.net/fontsource/fonts/atkinson-hyperlegible-next:vf@latest/latin-wght-normal.woff2">
+		<link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href="https://cdn.jsdelivr.net/fontsource/fonts/grandstander:vf@latest/latin-wght-normal.woff2">
+		<meta name="generator" content={Astro.generator} />
+		<link rel="preload" as="font" type="font/woff" crossorigin="anonymous" href="https://cdn.jsdelivr.net/fontsource/fonts/architects-daughter@latest/latin-400-normal.woff">
+		<link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href="https://cdn.jsdelivr.net/fontsource/fonts/architects-daughter@latest/latin-400-normal.woff2">
+		<link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href="https://cdn.jsdelivr.net/fontsource/fonts/quicksand:vf@latest/latin-wght-normal.woff2">
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<script is:inline>
+			const root = document.documentElement;
+
+			const moon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon-icon lucide-moon"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>`;
+
+			const sun = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun-icon lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`
+
+
+			const theme = localStorage.getItem("user-theme-preference");
+			if (theme) {
+				root.setAttribute("data-theme", theme);
+				root.style.setProperty("color-scheme", theme)
+				themeBtn.innerHTML = theme === "dark" ? sun : moon;
+			} else {
+				const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+				localStorage.setItem("user-theme-preference", system);
+				root.setAttribute("data-theme", system);
+				root.style.setProperty("color-scheme", system)
+				themeBtn.innerHTML = system === "dark" ? sun : moon;
+			}
+
+			function toggleTheme() {
+				const theme = root.getAttribute("data-theme");
+				const newTheme = theme === "dark" ? "light" : "dark";
+				localStorage.setItem("user-theme-preference", newTheme);
+				root.setAttribute("data-theme", newTheme);
+				root.style.setProperty("color-scheme", newTheme)
+				themeBtn.innerHTML = newTheme === "dark" ? sun : moon;
+			}
+		</script>
+		<style is:global>
+			/* atkinson-hyperlegible-next-latin-wght-normal */
+			@font-face {
+				font-family: 'Atkinson Hyperlegible'; /* Next Variable';*/
+				font-style: normal;
+				font-display: swap;
+				font-weight: 200 800;
+				src: url(https://cdn.jsdelivr.net/fontsource/fonts/atkinson-hyperlegible-next:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+				unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+			}
+			/* grandstander-latin-wght-normal */
+			@font-face {
+				font-family: 'Grandstander'; /* Variable'; */
+				font-style: normal;
+				font-display: swap;
+				font-weight: 100 900;
+				src: url(https://cdn.jsdelivr.net/fontsource/fonts/grandstander:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+				unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+			}
+			/* architects-daughter-latin-400-normal */
+			@font-face {
+				font-family: 'Architects Daughter';
+				font-style: normal;
+				font-display: swap;
+				font-weight: 400;
+				src: url(https://cdn.jsdelivr.net/fontsource/fonts/architects-daughter@latest/latin-400-normal.woff2) format('woff2'), url(https://cdn.jsdelivr.net/fontsource/fonts/architects-daughter@latest/latin-400-normal.woff) format('woff');
+				unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+			}
+			/* quicksand-latin-wght-normal */
+			@font-face {
+				font-family: 'Quicksand';
+				font-style: normal;
+				font-display: swap;
+				font-weight: 300 700;
+				src: url(https://cdn.jsdelivr.net/fontsource/fonts/quicksand:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+				unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+			}
+		</style>
 	</head>
 	<body>
 		<header >
@@ -34,33 +108,13 @@ const { title, post } = Astro.props;
 			)}
 		</header>
 		<slot name="hero" />
-		<Wrapper class='main-wrapper'>
+		<main class='main-wrapper'>
 			<slot />
-		</Wrapper>
-		<!-- <Footer {links} {socials} /> -->
+		</main>
+		<Footer {links} {socials} />
 		<Analytics />
 	</body>
 </html>
-
-<script>
-	import { themeManager } from "@/utils/frontend/theme";
-
-	const moon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon-icon lucide-moon"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>`;
-
-	const sun = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun-icon lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`
-
-	const themeBtn = document.getElementById("theme-toggle") as HTMLButtonElement;
-	themeManager.applyTheme("system")
-
-	themeBtn.addEventListener("click", () => {
-		const rt = themeManager.getResolvedTheme()
-		themeManager.applyTheme(rt === "dark" ? "light" : "dark");
-		rt === "light" ? themeBtn.innerHTML = sun : themeBtn.innerHTML = moon;
-	});
-	window.__app__.themeManager = themeManager;
-</script>
-
-
 
 <style>
 	*, *::before, *::after {
@@ -94,6 +148,8 @@ const { title, post } = Astro.props;
 				padding: --space(2);
 				padding-top: --space(6);
 				justify-items: center safe;
+				align-content: center safe;
+				/* border: red dotted; */
 				width: stretch;
 				background-image: 
 					linear-gradient(to bottom,)
@@ -110,7 +166,7 @@ const { title, post } = Astro.props;
 		align-content: center safe;
 		padding-top: --space(6);
 	}
-	.main-wrapper {
+	.main-wrapper, main.main-wrapper {
 		width: stretch;
 		max-width: 100ch;
 		margin-inline: auto;
@@ -118,6 +174,7 @@ const { title, post } = Astro.props;
 		padding-inline: auto;
 		justify-items: center safe;
 		align-content: center safe;
+		min-height: 80svh;
 	}
 	.post-title {
 		display: block;
