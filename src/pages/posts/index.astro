@@ -1,12 +1,11 @@
 ---
 export const prerender = true;
 
-import { getCollection } from 'astro:content';
-import Layout from '@/layouts/Layout.astro';
-import { Icon } from '@/assets/icons/icon';
-import { postsFilter } from '@/utils/collections/filters';
 import { ArticleCard, HrIcon } from '@/components';
-import { humanDate, longDate } from '@/utils/posts/date';
+import Layout from '@/layouts/Layout.astro';
+import { postsFilter } from '@/utils/collections/filters';
+import { longDate } from '@/utils/posts/date';
+import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('posts', postsFilter['filter-published-on-production']))
   .sort((a,b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -15,10 +14,9 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
 
 <Layout title="Posts - Osee Blogs">
   <section class="posts-section">
-    <ul class="posts__list">
-      <h1 class="posts__title">All my posts over the years.</h1>
-      <HrIcon icon="book" /> 
-    
+    <h1 class="posts__title">All my posts over the years.</h1>
+    <HrIcon icon="book" /> 
+    <ul class="posts__list">    
       {posts.map((p, i) => (
         <li class="block px-1 py-2 content-center-safe justify-items-center-safe">
           <div class="post__wrapper">
@@ -27,8 +25,8 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
             </time>
             <ArticleCard {...p} />
           </div>
+          <span>{i < posts.length ? <hr class="after-article" /> : ""}</span>
         </li>
-        <span>{i < posts.length ? <hr class="after-article" /> : ""}</span>
       ))}
     </ul>
   </section>
@@ -46,6 +44,13 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
       justify-items: center safe;
       padding: 0 --space(4);
     }
+    .posts__title {
+      font-size: xx-large;
+      font-family: "Grandstander", sans-serif;
+      font-weight: normal;
+      color: light-dark(rgb(121, 29, 29), white);
+      line-height: 1.5;
+    }
     ul.posts__list {
       &{
         display: block;
@@ -55,13 +60,6 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
         margin-inline: auto;
         justify-items: center safe;
         align-content: center safe;
-      }
-      .posts__title {
-        font-size: xx-large;
-        font-family: "Grandstander", sans-serif;
-        font-weight: normal;
-        color: light-dark(rgb(121, 29, 29), white);
-        line-height: 1.5;
       }
       li {
         & {

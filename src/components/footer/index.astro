@@ -9,22 +9,120 @@ interface Props extends HTMLAttributes<"nav"> {
 }
 
 const { links, socials } = Astro.props;
+
+const date = new Date();
 ---
 
-<Wrapper class="block w-full p-2 pb-6 pt-3 sm:p-4 sm:pt-6 sm:pb-8 content-center-safe justify-items-center-safe bg-rose-200 dark:bg-rose-800">
-    <footer class="block sm:flex w-full max-w-[80ch] items-center justify-between leading-loose">
-        <div class="flex items-center-safe justify-center-safe">
+<Wrapper class="wrapper">
+    <footer>
+        <div class="footer__div">
             <p class="block content-center-safe justify-items-center-safe text-center font-arch font-semibold tracking-wider my-6 leading-10">
                 Built with <a href="https://astro.build" target="_blank" class="highlight">Astro</a>, <a href="https://keystatic.com" target="_blank" class="highlight">keystatic</a>, and <a href="https://tailwindcss.com" target="_blank" class="highlight">Tailwind CSS</a>
             </p>
         </div>
-        <div class="flex gap-3 m-3 items-center-safe justify-center-safe">
-            {socials.map((s) => (
-                <a href="" class="p-2 m-1" data-tooltip={s.label}>
-                    <s.icon data-label={s.label} />
-                </a>
-            ))}
+        <div class="footer__div">
+            <ul>
+                {socials.map((s) => (
+                    <li>
+                        <a href={"#s.href"} class="p-2 m-1" data-tooltip={s.label}>
+                            <s.icon data-label={s.label} class="icon" />
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+        <div class="footer__div">
+            <p>&copy; <time id="copyYear" datetime={date.toISOString()}>{date.getFullYear()}</time> Lazaro Osee | All rights reserved.</p>
+            <script is:inline>
+                const date = new Date();
+                copyYear.innerHTML = date.getFullYear();
+                copyYear.setAttribute("datetime", date.toISOString());
+            </script>
         </div>
     </footer>
 </Wrapper>
 
+<style>
+    .wrapper {
+        & {
+            width: stretch;
+            margin-block-end: --space(-3);
+            padding: --space(2);
+            padding-bottom: --space(6);
+            padding-top: --space(3);
+            justify-items: center safe;
+            align-content: center safe;
+            border-radius: 4rem 4rem 0 0;
+            background-color: light-dark(rgb(121 29 29 / 20%), rgb(166 37 37 / 40%));
+        }
+        footer {
+            & {
+                width: stretch;
+                max-width: 80ch;
+                justify-items: center safe;
+                align-content: center safe;
+                margin: 2rem auto;
+            }
+            .footer__div {
+                & {
+                    width: stretch;
+                    align-content: center;
+                    justify-items: center;
+                    margin-block-start: calc((sibling-index() - 1) * --space(3));
+                }
+                ul {
+                    &{
+                        list-style: none;
+                        display: flex;
+                        width: stretch;
+                        padding: 0;
+                        flex-direction: row;
+                        gap: 2rem;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    li {
+                        & {
+                            display: inline-block;
+                            list-style: none;
+                            border: none;
+                            outline-color: transparent;
+                        };
+                    }
+                    a {
+                        & {
+                            display: block;
+                            padding: --space(1.25) --space(2);
+                            background-color: --alpha(gray / 50%);
+                            color: light-dark(black, white);
+                            text-decoration: none;
+                            outline-color: transparent;
+                            transition: all 0.2s ease-in-out;
+                            cursor: pointer;
+                            border: 0.1rem solid;
+                            border-color: light-dark(rgb(0 0 0 / 10%), rgb(255 255 255 / 10%));
+                            border-radius: 2rem;
+                            corner-shape: squircle;
+                        }
+                        .icon {
+                            fill: light-dark(black, white);
+                            width: clamp(1rem, calc(1rem + 1vw), 1.6rem);
+                            height: clamp(1rem, calc(1rem + 1vw), 1.6rem);
+                            display: block;
+                        }
+                        &:hover,
+                        &:focus {
+
+                        }
+                    }
+                }
+            }
+        }
+        @media (min-width: 640px) {
+            & {
+                padding: --space(4);
+                padding-bottom: --space(8);
+            }
+        }
+    }
+</style>

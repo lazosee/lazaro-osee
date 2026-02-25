@@ -57,6 +57,17 @@ const featuredWork = (await getCollection('work-category', workFilter['filter-fe
       ))}
     </div>
   </section>
+  
+  <section class="notifications-section">
+    <div class="notifications__card">
+      <Icon name="bell" class="notifications__icon" />
+      <h2 class="notifications__title">Stay in the loop</h2>
+      <p class="notifications__description">
+        Get notified directly in your browser whenever I publish new articles or launch new projects.
+      </p>
+      <button id="get-notified" class="notifications__button cta blog-cta">Get Notified</button>
+    </div>
+  </section>
 
   <section class="posts-section">
     <h2 class="posts__title">Recent Writing</h2>
@@ -73,16 +84,6 @@ const featuredWork = (await getCollection('work-category', workFilter['filter-fe
         </li>
       ))}
     </ul>
-  </section>
-  <section class="notifications-section">
-    <div class="notifications__card">
-      <Icon name="bell" class="notifications__icon" />
-      <h2 class="notifications__title">Stay in the loop</h2>
-      <p class="notifications__description">
-        Get notified directly in your browser whenever I publish new articles or launch new projects.
-      </p>
-      <button id="get-notified" class="notifications__button cta blog-cta">Get Notified</button>
-    </div>
   </section>
 </Layout>
 

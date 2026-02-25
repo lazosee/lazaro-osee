@@ -108,10 +108,10 @@ const { title, post } = Astro.props;
 			)}
 		</header>
 		<slot name="hero" />
-		<Wrapper class='main-wrapper'>
+		<main class='main-wrapper'>
 			<slot />
-		</Wrapper>
-		<!-- <Footer {links} {socials} /> -->
+		</main>
+		<Footer {links} {socials} />
 		<Analytics />
 	</body>
 </html>
@@ -166,7 +166,7 @@ const { title, post } = Astro.props;
 		align-content: center safe;
 		padding-top: --space(6);
 	}
-	.main-wrapper {
+	.main-wrapper, main.main-wrapper {
 		width: stretch;
 		max-width: 100ch;
 		margin-inline: auto;
@@ -174,6 +174,7 @@ const { title, post } = Astro.props;
 		padding-inline: auto;
 		justify-items: center safe;
 		align-content: center safe;
+		min-height: 80svh;
 	}
 	.post-title {
 		display: block;

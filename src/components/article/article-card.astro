@@ -37,8 +37,8 @@ const { slug, title, excerpt } = Astro.props;
             font-weight: normal;
             }
             &:hover {
-            text-decoration: underline  var(--link-color);
-            text-underline-offset: 0.2rem;
+                text-decoration: underline  var(--link-color);
+                text-underline-offset: 0.2rem;
             }
             h3 {
             & {
@@ -47,7 +47,7 @@ const { slug, title, excerpt } = Astro.props;
                 font-weight: normal;
                 font-family: "Grandstander", sans-serif;
                 line-height: 1.5;
-                color: var(--link-color);
+                color: light-dark(rgb(121, 29, 29), rgb(255, 174, 174)); /*var(--link-color);*/
             }
             }
         }
