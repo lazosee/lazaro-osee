@@ -104,12 +104,7 @@ import { subscribeUser } from "@/utils/frontend/push";
         if (permission === 'granted') {
           // Subscribe user
           const {message, success} = await subscribeUser();
-
           alert(message);
-
-          if (success) {
-
-          }
         }
       });
     // }
@@ -127,7 +122,7 @@ import { subscribeUser } from "@/utils/frontend/push";
       width: stretch;
       position: relative;
       overflow: hidden;
-      min-height: 70dvh;
+      min-height: 70svh;
       padding: --space(1.5);
       padding-bottom: --space(5);
       font-family: "Grandstander", sans-serif;
