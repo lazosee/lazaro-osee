@@ -4,13 +4,13 @@ import { collection, config, fields } from '@keystatic/core'
 import { block, wrapper } from '@keystatic/core/content-components'
 
 export default config({
-	storage: {
-		kind: 'local',
-	},
 	// storage: {
-	// 	kind: 'github',
-	// 	repo: 'lazosee/lazaro-osee',
+	// 	kind: 'local',
 	// },
+	storage: {
+		kind: 'github',
+		repo: 'lazosee/lazaro-osee',
+	},
 	cloud: {
 		project: '',
 	},
