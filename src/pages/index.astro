@@ -4,10 +4,18 @@ export const prerender = true;
 import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import { Icon } from '@/assets/icons/icon';
-import { postsFilter } from '@/utils/collections/filters';
-import { HrIcon } from '@/components';
+import { postsFilter, workFilter } from '@/utils/collections/filters';
+import { ArticleCard, FeaturedWorkCategory, HrIcon } from '@/components';
+import type { PostMetadata, WorkMetadata } from '@/types/metadata';
 
-const posts = (await getCollection('posts', postsFilter['filter-published-on-production'])).slice(0, 5);
+const posts = (await getCollection('posts', postsFilter['filter-published-on-production']))
+  .sort((a,b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5)
+  .map((p) => ({...p.data, slug: p.slug, id: p.id} satisfies PostMetadata));
+
+const featuredWork = (await getCollection('work-category', workFilter['filter-featured']))
+  .slice(0, 5)
+  .map((p) => ({...p.data, id: p.id} satisfies WorkMetadata));
 
 ---
 
@@ -20,8 +28,8 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
       
       <p class="sub-title">
         Architecture student by day, software developer by night. 
-        I design <span class="italic font-medium text-slate-800 dark:text-slate-200">physical spaces</span> 
-        and build <span class="italic font-medium text-slate-800 dark:text-slate-200">digital ones</span>.
+        I design <span class="italic font-medium highlight">physical spaces</span> 
+        and build <span class="italic font-medium highlight">digital ones</span>.
       </p>
 
       <div class="ctas__div">
@@ -34,40 +42,78 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
       </div>
     </div>
 
-    <div class="svg-wrapper">
+    <div class="svg-wrapper" aria-hidden="true">
       <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
       </svg>
     </div>
   </section>
-  <section class="posts-section">
-    <ul class="posts__list">
-      <h2 class="posts__title">Here are some of my recent posts</h2>
-      <HrIcon icon="book" /> 
 
+  <section id="work" class="work-preview">
+    <h2 class="section-title">Featured Work</h2>
+    <div class="work-grid">
+      {featuredWork.map((w) => (
+        <FeaturedWorkCategory {...w} />
+      ))}
+    </div>
+  </section>
+
+  <section class="posts-section">
+    <h2 class="posts__title">Recent Writing</h2>
+    <HrIcon icon="book" /> 
+
+    <ul class="posts__list">
       {posts.map((p, i) => (
-        <li>
-          <article>
-            <a href={`/posts/${p.slug}`} class="post__link">
-              <h3 class="">{p.data.title}</h3>
-            </a>
-            <p class="excerpt">{p.data.excerpt}</p>
-            <a href={`/posts/${p.slug}`} class="post__read-more">
-              <span>Read more</span>
-              <Icon name="move-right" />
-            </a>
-          </article>
-        </li>
-        <div>
+        <li class="post-item">
+          <ArticleCard {...p} />
           {(i + 1) < posts.length 
             ? <hr class="after-article" /> 
             : ""
           }
-        </div>
+        </li>
       ))}
     </ul>
   </section>
+  <section class="notifications-section">
+    <div class="notifications__card">
+      <Icon name="bell" class="notifications__icon" />
+      <h2 class="notifications__title">Stay in the loop</h2>
+      <p class="notifications__description">
+        Get notified directly in your browser whenever I publish new articles or launch new projects.
+      </p>
+      <button id="get-notified" class="notifications__button cta blog-cta">Get Notified</button>
+    </div>
+  </section>
 </Layout>
+
+<script>
+import { subscribeUser } from "@/utils/frontend/push";
+
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('SW Registered!', reg))
+      .catch(err => console.error('SW Registration failed!', err));
+  }
+
+  const notificationButton = document.getElementById('get-notified') as HTMLButtonElement;
+
+  notificationButton.addEventListener('click', async (e) => {
+      Notification.requestPermission().then(async permission => {
+        if (permission === 'granted') {
+          // Subscribe user
+          const {message, success} = await subscribeUser();
+
+          alert(message);
+
+          if (success) {
+
+          }
+        }
+      });
+    // }
+  });
+</script>
 
 <style>
   section {
@@ -113,11 +159,14 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
           font-weight: bold;
         }
         span {
-          color: light-dark(rebeccapurple, rgb(166, 37, 37));
+          color: light-dark(rgb(121, 29, 29), rgb(166, 37, 37));
         }
       }
       p.sub-title {
         margin-bottom: --space(8);
+      }
+      .highlight {
+        color: light-dark(var(--slate-800), var(--slate-200));
       }
       .ctas__div {
         &{
@@ -150,7 +199,6 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
           color: light-dark(white, rgb(121, 29, 29));
         }
         .work-cta {
-          /* px-8 py-3 text-xl font-medium border-2 border-rose-400 dark:border-rose-800 rounded-full corner-squircle hover:bg-rose-50 dark:hover:bg-rose-900 transition-colors */
           border: light-dark(rgb(121, 29, 29), white) 0.2rem solid;
           color: light-dark(black, white);
         }
@@ -171,6 +219,22 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
       }
     }
   }
+  .work-preview {
+    padding: --space(12) --space(4);
+    max-width: 80ch;
+    margin-inline: auto;
+    .section-title {
+      font-family: "Grandstander", sans-serif;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: --space(8);
+    }
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: --space(6);
+    }
+  }
   .posts-section {
     &{
       display: block;
@@ -180,6 +244,11 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
       align-content: center safe;
       justify-items: center safe;
       padding: 0 --space(4);
+    }
+    .posts__title {
+      text-align: center;
+      width: 100%;
+      display: block;
     }
     ul.posts__list {
       &{
@@ -206,53 +275,49 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
           justify-items: center safe;
           align-content: center safe;
         }
-        article {
-          & {
-            display: block;
-            gap: --space(1);
-            font-size: 1.2rem;
-          }
-          .post__link {
-            &{
-              display: block;
-              margin-bottom: --space(1);
-              text-decoration: none;
-              color: light-dark(black, white);
-              transition: all 0.7s ease-in-out;
-              font-weight: normal;
-            }
-            &:hover {
-              text-decoration: underline  var(--link-color);
-              text-underline-offset: 0.2rem;
-            }
-            h3 {
-              & {
-                display: block;
-                width: stretch;
-                font-weight: normal;
-                font-family: "Grandstander", sans-serif;
-                line-height: 1.5;
-                color: var(--link-color);
-              }
-            }
-          }
-          p.excerpt {
-            /*  */
-          }
-          .post__read-more {
-            /* block underline text-link py-2 my-2 */
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: flex-start;
-            text-decoration: underline;
-            text-underline-offset: 0.2rem;
-            color: var(--link-color);
-            gap: --space(2);
-          }
-        }
       }
       hr.after-article { margin: --space(9) auto --space(3); border: none; border-top: 0.1rem solid; }
     }
+  }
+  .notifications-section {
+    display: flex;
+    justify-content: center;
+    padding: --space(12) --space(4);
+  }
+  .notifications__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 40rem;
+    padding: --space(8);
+    border: 2px dashed light-dark(rgba(121, 29, 29, 0.3), rgba(255, 255, 255, 0.3));
+    border-radius: 4rem;
+    background-color: light-dark(rgba(121, 29, 29, 0.03), rgba(255, 255, 255, 0.03));
+    corner-shape: squircle;
+  }
+  .notifications__icon {
+    width: --space(10);
+    height: --space(10);
+    margin-bottom: --space(4);
+    color: light-dark(rgb(121, 29, 29), white);
+    fill: light-dark(rgb(121, 29, 29), white);
+  }
+  .notifications__title {
+    font-family: "Grandstander", sans-serif;
+    font-size: 1.75rem;
+    margin-bottom: --space(2);
+  }
+  .notifications__description {
+    font-size: 1.1rem;
+    margin-bottom: --space(6);
+    opacity: 0.9;
+  }
+  .notifications__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: light-dark(rgb(121, 29, 29), white);
+    color: light-dark(white, rgb(121, 29, 29));
   }
 </style>

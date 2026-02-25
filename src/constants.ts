@@ -16,6 +16,7 @@ export interface Social {
 export const links = [
 	{ href: '/', label: 'Home' },
 	{ href: '/posts', label: 'Posts' },
+	{ href: '/work', label: 'Work' },
 	{ href: '/uses', label: 'Uses' },
 ] as Link[]
 

@@ -22,7 +22,7 @@ const { links } = Astro.props;
                     <a href={link.href}>{link.label}</a>
                 </li>
             ))} 
-            <button id="theme-toggle">
+            <button id="themeBtn" onclick="toggleTheme()">
                 <Icon id="theme-toggle-icon" name="sun" style="--size: 5rem" />
             </button>
         </ul>
@@ -67,13 +67,16 @@ const { links } = Astro.props;
             ul {
                 & {
                     /* list-none flex sm:flex gap-3 */
+                    padding: 0;
+                    margin: clamp(1rem, 1.5rem + 1vw, 2rem) 0 0 0;
                     list-style: none;
                     display: flex;
                     flex-wrap: wrap;
                     flex-direction: row;
                     justify-content: center;
                     align-items: center;
-                    gap: --space(4);
+                    width: stretch;
+                    gap: --space(3);
                 }
 
                 li {

@@ -1,12 +1,16 @@
+import { IconNameSchema } from '@/assets/icons/icon'
 import { DarkBarnd, LightBarnd } from '@cms/brand'
 import { collection, config, fields } from '@keystatic/core'
 import { block, wrapper } from '@keystatic/core/content-components'
 
 export default config({
 	storage: {
-		kind: 'github',
-		repo: 'lazosee/lazaro-osee',
+		kind: 'local',
 	},
+	// storage: {
+	// 	kind: 'github',
+	// 	repo: 'lazosee/lazaro-osee',
+	// },
 	cloud: {
 		project: '',
 	},
@@ -19,6 +23,46 @@ export default config({
 		},
 	},
 	collections: {
+		'work-category': collection({
+			label: 'Work Categories',
+			slugField: 'title',
+			path: 'src/content/work-category/*',
+			format: 'yaml',
+			schema: {
+				title: fields.slug({
+					name: { label: 'Work Category Title', description: 'Title of the work category' },
+					slug: { label: 'Work Category Slug', description: 'A URL friendly work category ID' },
+				}),
+				subtitle: fields.text({
+					label: 'Work Category Subtitle',
+					description: 'Subtitle of the work category',
+					multiline: true,
+					defaultValue: function () {
+						return `Some description on this topic`
+					},
+				}),
+				featured: fields.checkbox({
+					label: 'Is Featured',
+					description: 'Is this a featured work category?',
+					defaultValue: false,
+				}),
+				icon: fields.select({
+					label: 'Work Category Icon',
+					defaultValue: 'quote',
+					options: IconNameSchema.options.map(
+						(opt) =>
+							({
+								label: opt,
+								value: opt,
+							}) as const
+					),
+				}),
+			},
+			// icon: IconNameSchema,
+			// title: z.string(),
+			// subtitle: z.string(),
+			// featured: z.boolean().default(false),
+		}),
 		authors: collection({
 			label: 'Authors',
 			slugField: 'name',

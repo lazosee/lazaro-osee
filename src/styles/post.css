@@ -11,7 +11,7 @@
 		margin-inline: auto;
 		justify-items: center safe;
 		min-height: 100dvh;
-		padding: 0;
+		padding: 0 2rem;
 		font-size: 1.25rem;
 		font-weight: normal;
 		line-height: 1.8;
@@ -96,11 +96,13 @@
 				width: stretch;
 				margin: 0;
 				padding-block: --space(2);
-				padding-inline: --space(4) --space(0.25);
+				padding-inline-start: --space(8);
+				padding-inline-end: --space(0.25);
 				border: none;
 				/* border-left: 1rem solid var(--em-color); */
 				border-radius: --space(16);
 				corner-shape: squircle;
+				font-weight: lighter;
 			}
 
 			&::before {

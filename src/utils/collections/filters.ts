@@ -7,3 +7,7 @@ export const postsFilter = {
 	'filter-published-on-production': ({ data }: CollectionEntry<'posts'>) =>
 		(process.env.NODE_ENV || import.meta.env.NODE_ENV) === 'production' ? !data.isDraft : true,
 }
+
+export const workFilter = {
+	'filter-featured': ({ data }: CollectionEntry<'work-category'>) => data.featured,
+}
