@@ -109,6 +109,24 @@ import { subscribeUser } from "@/utils/frontend/push";
       });
     // }
   });
+
+  // Ensure service worker know the system theme for choosing notification icon
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+  const syncThemeWithSW = (isDark: boolean) => {
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: 'THEME_CHANGE',
+        isDark: isDark
+      });
+    }
+  };
+
+  // Send initial state
+  syncThemeWithSW(mediaQuery.matches);
+
+  // Listen for changes
+  mediaQuery.addEventListener('change', (e) => syncThemeWithSW(e.matches));
 </script>
 
 <style>

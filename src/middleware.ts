@@ -1,43 +1,50 @@
 import { D1_REST_URL } from '@/db/worker'
 import { defineMiddleware } from 'astro:middleware'
 
-console.log('Middleware loaded')
-
 export const onRequest = defineMiddleware(async (context, next) => {
-	const sessionId = context.cookies.get('app_session')?.value
-	console.log('Cookie Found:', sessionId)
+	const path = context.url.pathname
 
-	// 1. If no cookie, user is definitely not logged in
+	// 1. ROUTE GUARD: Only run Auth logic for admin and keystatic
+	const isProtectedRoute = path.startsWith('/admin') || path.startsWith('/keystatic')
+
+	// Skip everything else (home page, blog, assets)
+	if (!isProtectedRoute) {
+		context.locals.user = null
+		return next()
+	}
+
+	// 2. COOKIE CHECK
+	const sessionId = context.cookies.get('app_session')?.value
+
 	if (!sessionId) {
 		context.locals.user = null
 	} else {
 		try {
-			// 2. Verify session with your D1 REST API
+			// 3. VERIFY WITH D1
 			const response = await fetch(`${D1_REST_URL}/query`, {
 				method: 'POST',
 				body: JSON.stringify({
-					query: 'SELECT * FROM sessions WHERE id = ? LIMIT ?;',
-					params: [sessionId, 1],
+					query: 'SELECT * FROM sessions WHERE id = ? LIMIT 1;',
+					params: [sessionId],
 				}),
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${import.meta.env.CLOUDFLARE_D1_SECRET}`,
 				},
 			})
-			const {
-				results: [session],
-			} = await response.json()
 
-			console.dir(session, { depth: Infinity })
+			// Handle non-JSON or empty responses safely
+			const data = await response.json()
+			const session = data?.results?.[0] // Safer than direct array destructuring
 
 			const now = Math.floor(Date.now() / 1000)
 
-			// 3. Validate existence and expiration
 			if (session && session.expires_at > now) {
 				context.locals.user = { email: session.user_id }
 			} else {
 				context.locals.user = null
-				context.cookies.delete('app_session') // Clean up stale cookie
+				// Only delete if we are on a protected route to avoid weird side effects
+				context.cookies.delete('app_session', { path: '/' })
 			}
 		} catch (e) {
 			console.error('Auth middleware error:', e)
@@ -45,12 +52,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
 		}
 	}
 
-	// 4. Protect Routes: Redirect if trying to access /admin without a user
-	if (
-		(context.url.pathname.startsWith('/admin') || context.url.pathname.startsWith('/keystatic')) &&
-		!context.url.pathname.startsWith('/admin/login') &&
-		!context.locals.user
-	) {
+	// 4. REDIRECT LOGIC
+	// If it's a protected route, it's NOT the login page, and user is null -> Redirect
+	if (isProtectedRoute && !path.startsWith('/admin/login') && !context.locals.user) {
 		return context.redirect('/admin/login')
 	}
 
