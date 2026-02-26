@@ -47,7 +47,7 @@ const featuredWork = (await getCollection('work-category', workFilter['filter-fe
     </div>
 
     <div class="svg-wrapper" aria-hidden="true">
-      <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
       </svg>
     </div>
@@ -226,16 +226,21 @@ import { subscribeUser } from "@/utils/frontend/push";
     }
     .svg-wrapper {
       & {
-        /* absolute bottom-10 animate-bounce */
-        position: absolute;
-        bottom: --space(5);
-        left: 50%;
-        translate: -50% 0%;
-        animation: bounceY 1s ease-in-out infinite;
+        width: stretch;
+        height: --space(16);
+        margin-inline: auto;
+        display: block;
+        justify-items: center safe;
+        align-content: center safe;
+        align-items: center;
+        justify-content: center;
       }
       svg {
+        /* w-6 h-6 text-slate-400 */
         width: --space(12);
         height: --space(12);
+        animation: bounceY 1s ease-in-out infinite;
+        fill: light-dark(rgb(121, 29, 29), white);
       }
     }
   }
