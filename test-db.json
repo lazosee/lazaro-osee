@@ -1,22 +1,3 @@
 {
-  "notifications": [
-    {
-      "id": "189f",
-      "endpoint": "https://fcm.googleapis.com/fcm/send/f1PoJy_-4gg:APA91bEA-e445VCLDn9-a2a2jtPevuoY1u_EoyU9zW3-VVj3BbiaqkZcusKfdIR9ifNROVnEBSDw_vhuMT2av7R-bfE9sp7lR2ltxrUw_zBTknCKYdHHq2fXXEx2o8Zf-Jo_g7I9W7W4",
-      "expirationTime": null,
-      "keys": {
-        "p256dh": "BBxmy4bS8lYkqSIueB2uS7Hn8rHRXIk8_RaZXDVdAt7oKerf6KEb4MwfW2s7PKqqlPIVFP0Fk2ZVbhFqkJ32hF8",
-        "auth": "RkAqStamWKXm18oHQskZQw"
-      }
-    },
-    {
-      "id": "61cb",
-      "endpoint": "https://fcm.googleapis.com/fcm/send/fBr_7z3T-L0:APA91bFNkdp-1o5X0ygPyesOnX5XwxGjkgCHswj7cXw-0VAFNykvtAjeFWcJ3ocs-bti8_j3u5sLcEM7-5Q0iqU52G-T3rXA4wStlDl8Mkn417s1y0Fi-AxEUk5qFoZWPnB8WM6j6fKv",
-      "expirationTime": null,
-      "keys": {
-        "p256dh": "BL6zkSIdFO-jTAG3NYDWzTkFKZJhjmrE11zJifGJkz2plKWVBF7yjO02n2XTdQB89ZeMbg4LHovhk9R-sdO_q1w",
-        "auth": "MVzWgJ5h1-kNBlZFsgkkBQ"
-      }
-    }
-  ]
+	"notifications": []
 }

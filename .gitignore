@@ -10,3 +10,8 @@
 /build/
 /dist/
 .vercel
+.http
+*.http
+
+# test
+test-db.json

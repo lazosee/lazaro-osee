@@ -12,7 +12,11 @@ const posts = (await getCollection('posts', postsFilter['filter-published-on-pro
   .map((p) => ({...p.data, slug: p.slug, id: p.id}));
 ---
 
-<Layout title="Posts - Osee Blogs">
+<Layout
+  title='Recent Writings | Lazaro Osee'
+  description='From exploring modern web frameworks like Astro and Markdoc, read insights on software development, architecture, and creative coding.'
+  keywords='Astro Framework, Markdoc, Software development blog, Architecture blog'
+>
   <section class="posts-section">
     <h1 class="posts__title">All my posts over the years.</h1>
     <HrIcon icon="book" /> 

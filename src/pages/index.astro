@@ -19,7 +19,11 @@ const featuredWork = (await getCollection('work-category', workFilter['filter-fe
 
 ---
 
-<Layout title="Home - Osee Blog">
+<Layout 
+  title="Lazaro Osee | Designing Physical & Digital Spaces" 
+  description='Portfolio and blog of Lazaro Osee, an architecture student and software developer. Discover projects bridging physical design and digital innovation.' 
+  keywords="Lazaro Osee, Architecture Student, Software Developer, Digital Spaces, Web development Kenya" 
+>
   <section slot="hero" class="hero">
     <div class="hero__div">
       <h1 class="title">
@@ -109,6 +113,24 @@ import { subscribeUser } from "@/utils/frontend/push";
       });
     // }
   });
+
+  // Ensure service worker know the system theme for choosing notification icon
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+  const syncThemeWithSW = (isDark: boolean) => {
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: 'THEME_CHANGE',
+        isDark: isDark
+      });
+    }
+  };
+
+  // Send initial state
+  syncThemeWithSW(mediaQuery.matches);
+
+  // Listen for changes
+  mediaQuery.addEventListener('change', (e) => syncThemeWithSW(e.matches));
 </script>
 
 <style>
@@ -180,7 +202,7 @@ import { subscribeUser } from "@/utils/frontend/push";
             justify-content: center safe;
             text-align: justify;
             text-box: trim-both ex alphabetic;
-            padding: --space(2) --space(3);
+            padding: --space(2) --space(2);
             border-radius: 16rem;
             corner-shape: squircle;
             text-decoration: none;
@@ -192,11 +214,13 @@ import { subscribeUser } from "@/utils/frontend/push";
         }
         .blog-cta {
           background-color: light-dark(rgb(121, 29, 29), white);
+          border: light-dark(rgb(121, 29, 29), white)  0.15rem solid;
           color: light-dark(white, rgb(121, 29, 29));
         }
         .work-cta {
-          border: light-dark(rgb(121, 29, 29), white) 0.2rem solid;
+          border: light-dark(rgb(121, 29, 29), white) 0.15rem solid;
           color: light-dark(black, white);
+          color: light-dark(rgb(121, 29, 29), white);
         }
       }
     }
