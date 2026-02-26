@@ -21,7 +21,13 @@ export async function getStaticPaths() {
 }
 ---
 
-<Layout title={post.data.title} post={post.data}>
+<Layout
+  title={`${post.data.title} | Lazaro Osee`} 
+  description={post.data.excerpt}
+  image={post.data.cover.src}
+  date={post.data.pubDate.toISOString()}
+  post={post.data}
+>
   <PostLayout frontmatter={post.data}>
     <Content />
   </PostLayout>
