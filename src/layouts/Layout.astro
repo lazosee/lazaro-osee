@@ -50,6 +50,8 @@ const { title, description, image, post, keywords = "", author = "Lazaro Osee", 
 		{image && <meta property="twitter:image" content={new URL(image, Astro.url)} /> }
 		<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
 		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+		
+		<link rel="sitemap" href="/sitemap-index.xml" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href="https://cdn.jsdelivr.net/fontsource/fonts/atkinson-hyperlegible-next:vf@latest/latin-wght-normal.woff2">
 		<link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href="https://cdn.jsdelivr.net/fontsource/fonts/grandstander:vf@latest/latin-wght-normal.woff2">

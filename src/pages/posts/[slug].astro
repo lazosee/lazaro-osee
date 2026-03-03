@@ -2,23 +2,23 @@
 export const prerender = true;
 
 import PostLayout from '@/layouts/PostLayout.astro';
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+
+// Generate static pages
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map(post => ({ params: { slug: post.slug }, props: { post } }));
+}
 
 const { slug } = Astro.params;
 if (!slug) {
   return Astro.redirect(Astro.url.pathname, 404)
 };
-const post = await getEntry('posts', slug);
 
-if (!post) throw new Error('No post found for this slug');
+const { post } = Astro.props
+
 const { Content } = await post.render();
-
-// Generate static pages
-export async function getStaticPaths() {
-  const posts = await getCollection('posts');
-  return posts.map(post => ({ params: { slug: post.slug } }));
-}
 ---
 
 <Layout

@@ -8,7 +8,8 @@ export const isProduction = import.meta.env.VERCEL_ENV === 'production'
 export const devDbUrl = 'https://5wbm4vgs-3000.uks1.devtunnels.ms'
 export const devWebUrl = 'fkc5gltd-4321.uks1.devtunnels.ms'
 
-export const productionWebUrl = import.meta.env.VITE_VERCEL_PROJECT_PRODUCTION_URL
+export const productionWebUrl =
+	import.meta.env.VITE_VERCEL_PROJECT_PRODUCTION_URL ?? 'www.lazaroosee.xyz'
 
 export interface Link {
 	href: string

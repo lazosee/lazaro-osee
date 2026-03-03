@@ -9,13 +9,28 @@ import expressiveCode from 'astro-expressive-code'
 import node from '@astrojs/node'
 import vercel from '@astrojs/vercel'
 
+import sitemap from '@astrojs/sitemap'
+
 config({ quiet: true })
 
 const isProd = process.env.NODE_ENV === 'production'
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://www.lazaroosee.xyz',
 	integrations: [
+		sitemap({
+			filter: (page) => {
+				// Exclude the 404 page from the sitemap
+				return (
+					!page.includes('404') &&
+					!page.includes('/admin') &&
+					!page.includes('/keystatic') &&
+					!page.includes('/login') &&
+					!page.includes('/register')
+				)
+			},
+		}),
 		react(),
 		markdoc(),
 		keystatic(),
